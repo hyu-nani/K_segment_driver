@@ -6,27 +6,24 @@ extern "C" {
 #endif
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_NUM             44
+#define LED_MAX_NUM             44
 
-/* Private structures --------------------------------------------------------*/
 
+/* Private enums -------------------------------------------------------------*/
 typedef enum
 {
     CFALSE = 0x00,
     CTRUE,
 } CBOOL;
 
-typedef enum 
-{
-    LED_OFF = 0x00,
-    LED_ON,
-    LED_MAX,
-} LED_STATE_TypeDef;
-
+/* Private structures --------------------------------------------------------*/
 typedef struct
 {
-    CBOOL buf[LED_NUM];
+    GPIO_PinState buf[LED_MAX_NUM];
 } LED_HANDLE_Struct;
+
+/* Exported functions prototypes ---------------------------------------------*/
+void showLED(void);
 
 #ifdef __cplusplus
 }

@@ -5,10 +5,10 @@
 extern "C" {
 #endif
 
+/* Includes ------------------------------------------------------------------*/
 #include "../Inc/support.h"
 
-
-
+/* Exported functions prototypes ---------------------------------------------*/
 void initTask(void);
 void mainTask(void);
 

@@ -4,6 +4,14 @@
 #include "../Inc/user_main.h"
 
 static LED_HANDLE_Struct sHandLED;
+
+void initLED(void)
+{
+    for (uint8_t pin = 0; pin < LED_MAX_NUM; pin++)
+    {
+        sHandLED.buf[pin] = GPIO_PIN_RESET;
+    }
+}
 void showLED(void)
 {
     uint8_t pin = 0;
