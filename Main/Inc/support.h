@@ -19,7 +19,7 @@ typedef enum
 /* Private structures --------------------------------------------------------*/
 typedef struct
 {
-    GPIO_PinState buf[LED_MAX_NUM];
+    GPIO_PinState eachState[LED_MAX_NUM];
 } LED_HANDLE_Struct;
 
 /* Exported functions prototypes ---------------------------------------------*/
