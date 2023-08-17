@@ -16,7 +16,6 @@ void initLED(void)
 void showLED(void)
 {
     uint8_t pin = 0;
-    //GPIOA->BSRR = 
     HAL_GPIO_WritePin(L01_GPIO_Port, L01_Pin, sHandLED.eachState[pin++]);
     HAL_GPIO_WritePin(L02_GPIO_Port, L02_Pin, sHandLED.eachState[pin++]);
     HAL_GPIO_WritePin(L03_GPIO_Port, L03_Pin, sHandLED.eachState[pin++]);
@@ -61,4 +60,42 @@ void showLED(void)
     HAL_GPIO_WritePin(L42_GPIO_Port, L42_Pin, sHandLED.eachState[pin++]);
     HAL_GPIO_WritePin(L43_GPIO_Port, L43_Pin, sHandLED.eachState[pin++]);
     HAL_GPIO_WritePin(L44_GPIO_Port, L44_Pin, sHandLED.eachState[pin++]);
+}
+
+/**
+ * brief : set led
+ * note  : state setting on number of led 
+ * param : target led num
+ * param : pin state
+ * return: x
+*/
+void insertStateLED(uint8_t ledNum, GPIO_PinState state)
+{
+    sHandLED.eachState[ledNum] = state;
+}
+
+/**
+ * brief : setup all LED 
+ * note  : GPIO_PIN_SET or GPIO_PIN_RESET
+ * param : GPIO_PinState
+ * return: x
+*/
+void allStateLED(GPIO_PinState state)
+{
+    if (state != GPIO_PIN_RESET)
+    {
+        GPIOA->BSRR = (uint32_t)0x9FFFU;
+        GPIOB->BSRR = (uint32_t)0xF33FU;
+        GPIOC->BSRR = (uint32_t)0x1FFFU;
+        GPIOD->BSRR = (uint32_t)0x0004U;
+        GPIOF->BSRR = (uint32_t)0x00F0U;
+    }
+    else
+    {
+        GPIOA->BRR = (uint32_t)0x9FFFU;
+        GPIOB->BRR = (uint32_t)0xF33FU;
+        GPIOC->BRR = (uint32_t)0x1FFFU;
+        GPIOD->BRR = (uint32_t)0x0004U;
+        GPIOF->BRR = (uint32_t)0x00F0U;
+    }
 }

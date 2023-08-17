@@ -24,7 +24,8 @@ typedef struct
 
 /* Exported functions prototypes ---------------------------------------------*/
 void showLED(void);
-
+void insertStateLED(uint8_t ledNum);
+void allStateLED(GPIO_PinState state);
 #ifdef __cplusplus
 }
 #endif

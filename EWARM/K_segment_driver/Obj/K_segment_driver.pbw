@@ -122477,20 +122477,6 @@
     },
     "members": [
       {
-        "ID": "c:@SA@LED_HANDLE_Struct@FI@buf",
-        "What": "FieldDecl",
-        "defdec": "Def",
-        "display": "buf",
-        "location": {
-          "column": "19",
-          "line": "22",
-          "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Inc\\support.h"
-        },
-        "name": "buf",
-        "origin": "user_include",
-        "scope": "_anonymous_support_h_20_9"
-      },
-      {
         "ID": "c:@SA@LED_HANDLE_Struct@FI@eachState",
         "What": "FieldDecl",
         "defdec": "Def",
@@ -122548,6 +122534,48 @@
       "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Inc\\support.h"
     },
     "name": "showLED",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@insertStateLED",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void insertStateLED(uint8_t)",
+    "location": {
+      "column": "6",
+      "line": "27",
+      "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Inc\\support.h"
+    },
+    "name": "insertStateLED",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@allStateLED",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void allStateLED(GPIO_PinState)",
+    "location": {
+      "column": "6",
+      "line": "28",
+      "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Inc\\support.h"
+    },
+    "name": "allStateLED",
+    "origin": "user_include",
+    "scope": null
+  },
+  {
+    "ID": "c:@F@allStateLED",
+    "What": "Function",
+    "defdec": "Dec",
+    "display": "void allStateLED(GPIO_PinState)",
+    "location": {
+      "column": "6",
+      "line": "28",
+      "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Inc\\support.h"
+    },
+    "name": "allStateLED",
     "origin": "user_include",
     "scope": null
   },
@@ -129734,6 +129762,20 @@
     "scope": null
   },
   {
+    "ID": "c:@F@allStateLED",
+    "What": "Function",
+    "defdec": "Def",
+    "display": "void allStateLED(GPIO_PinState)",
+    "location": {
+      "column": "6",
+      "line": "83",
+      "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Src\\support.c"
+    },
+    "name": "allStateLED",
+    "origin": "project_file",
+    "scope": null
+  },
+  {
     "ID": "c:@SystemCoreClock",
     "What": "Variable",
     "defdec": "Def",
@@ -129880,7 +129922,7 @@
     "display": "void mainTask(void)",
     "location": {
       "column": "6",
-      "line": "9",
+      "line": "10",
       "path": "C:\\Users\\I_LOVE\\Documents\\GitHub\\K_segment_driver\\Main\\Src\\user_main.c"
     },
     "name": "mainTask",
