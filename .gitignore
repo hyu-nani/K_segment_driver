@@ -1,4 +1,5 @@
 EWARM/settings/
 EWARM/K_segment_driver/
-EWARM/K_segment_driver.dep
 EWARM/K_segment_driver.ewt
+EWARM/settings/Project.wsdt
+EWARM/K_segment_driver.dep
