@@ -6,6 +6,12 @@
 
 static LED_HANDLE_Struct sHandLED;
 
+/**
+ * brief : initialize code about LED
+ * note  :
+ * param :
+ * return:
+*/
 void initLED(void)
 {
     for (uint8_t pin = 0; pin < LED_MAX_NUM; pin++)
@@ -13,6 +19,13 @@ void initLED(void)
         sHandLED.eachState[pin] = GPIO_PIN_RESET;
     }
 }
+
+/**
+ * brief : indicate LED
+ * note  : 
+ * param :
+ * return:
+*/
 void showLED(void)
 {
     uint8_t pin = 0;
