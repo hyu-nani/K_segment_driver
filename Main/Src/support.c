@@ -7,10 +7,10 @@
 static LED_HANDLE_Struct sHandLED;
 
 /**
- * brief : initialize code about LED
- * note  :
- * param :
- * return:
+ * @brief   initialize code about LED
+ * @note    
+ * @param
+ * @return
 */
 void initLED(void)
 {
@@ -21,10 +21,10 @@ void initLED(void)
 }
 
 /**
- * brief : indicate LED
- * note  : 
- * param :
- * return:
+ * @brief   indicate LED
+ * @note  
+ * @param 
+ * @return
 */
 void showLED(void)
 {
@@ -76,11 +76,11 @@ void showLED(void)
 }
 
 /**
- * brief : set led
- * note  : state setting on number of led 
- * param : target led num
- * param : pin state
- * return: x
+ * @brief   set led
+ * @note    state setting on number of led 
+ * @param   ledNum  target led num
+ * @param   state   pin state 
+ * @return  
 */
 void insertStateLED(uint8_t ledNum, GPIO_PinState state)
 {
@@ -88,10 +88,10 @@ void insertStateLED(uint8_t ledNum, GPIO_PinState state)
 }
 
 /**
- * brief : setup all LED 
- * note  : GPIO_PIN_SET or GPIO_PIN_RESET
- * param : GPIO_PinState
- * return: x
+ * @brief   setup all LED 
+ * @note    turn on/off all LED
+ * @param   state GPIO_PIN_SET or GPIO_PIN_RESET
+ * @return  
 */
 void allStateLED(GPIO_PinState state)
 {

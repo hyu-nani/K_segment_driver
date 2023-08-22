@@ -2,10 +2,10 @@
 #include "../Inc/user_main.h"
 
 /**
- * brief : initialize code
- * note  :
- * param :
- * return:
+ * @brief   initialize code
+ * @note    
+ * @param   
+ * @return  
 */
 void initTask(void)
 {
@@ -14,10 +14,10 @@ void initTask(void)
 }
 
 /**
- * brief : main code 
- * note  :
- * param :
- * return:
+ * @brief   main code 
+ * @note    
+ * @param   
+ * @return  
 */
 void mainTask(void)
 {
