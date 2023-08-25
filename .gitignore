@@ -1,5 +1,2 @@
-EWARM/settings/
-EWARM/K_segment_driver/
-EWARM/K_segment_driver.ewt
-EWARM/settings/Project.wsdt
-EWARM/K_segment_driver.dep
+TEST\segment_stm32f030_test\EWARM\settings\
+TEST\segment_stm32f030_test\EWARM\segment_stm32f030_test\
