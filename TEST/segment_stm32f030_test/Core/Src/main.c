@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "../../Main/Inc/user_main.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +44,7 @@
 UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
-osThreadId subTask02Handle;
+osThreadId subTaskHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -54,7 +54,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 void StartDefaultTask(void const * argument);
-void StartSubTask02(void const * argument);
+void StartSubTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -119,9 +119,9 @@ int main(void)
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  /* definition and creation of subTask02 */
-  osThreadDef(subTask02, StartSubTask02, osPriorityNormal, 0, 128);
-  subTask02Handle = osThreadCreate(osThread(subTask02), NULL);
+  /* definition and creation of subTask */
+  osThreadDef(subTask, StartSubTask, osPriorityNormal, 0, 128);
+  subTaskHandle = osThreadCreate(osThread(subTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -277,22 +277,22 @@ __weak void StartDefaultTask(void const * argument)
   /* USER CODE END 5 */
 }
 
-/* USER CODE BEGIN Header_StartSubTask02 */
+/* USER CODE BEGIN Header_StartSubTask */
 /**
-* @brief Function implementing the subTask02 thread.
+* @brief Function implementing the subTask thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartSubTask02 */
-__weak void StartSubTask02(void const * argument)
+/* USER CODE END Header_StartSubTask */
+__weak void StartSubTask(void const * argument)
 {
-  /* USER CODE BEGIN StartSubTask02 */
+  /* USER CODE BEGIN StartSubTask */
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END StartSubTask02 */
+  /* USER CODE END StartSubTask */
 }
 
 /**
