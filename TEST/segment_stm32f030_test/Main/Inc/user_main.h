@@ -13,9 +13,8 @@ typedef struct
 } USER_TYPEDEF;
 
 
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif /*code end*/
+#endif /* __USER_MAIN_H */

@@ -8,17 +8,17 @@ static USER_TYPEDEF USRM;
 
 void mainTask(uint32_t delay)
 {
-
+    osDelay(1);
 }
 
 void subTask(uint32_t delay)
 {
-
+    osDelay(1);
 }
 
 void StartDefaultTask(void const * argument)
 {
-
+    USRM.tick_main = osKernelSysTick();
     while(1)
     {
         mainTask(MAIN_TASK);
@@ -28,6 +28,7 @@ void StartDefaultTask(void const * argument)
 
 void StartSubTask(void const * argument)
 {
+    USRM.tick_sub = osKernelSysTick();
     while(1)
     {
         subTask(SUB_TASK);
