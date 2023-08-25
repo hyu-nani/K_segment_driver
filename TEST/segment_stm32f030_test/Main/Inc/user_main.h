@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include "../Inc/support.h"
+
 typedef struct 
 {
     uint32_t tick_main;
