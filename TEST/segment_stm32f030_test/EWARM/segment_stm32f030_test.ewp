@@ -355,10 +355,10 @@
           <state>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Inc</state>
           <state>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/include</state>
-          <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM0</state>
           <state>$PROJ_DIR$/../Drivers/CMSIS/Device/ST/STM32F0xx/Include</state>
           <state>$PROJ_DIR$/../Drivers/CMSIS/Include</state>
+          <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1121,6 +1121,12 @@
         <name>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_exti.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_spi.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_spi_ex.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c</name>
       </file>
       <file>
@@ -1166,7 +1172,7 @@
         <name>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/timers.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c</name>
+        <name>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c</name>
