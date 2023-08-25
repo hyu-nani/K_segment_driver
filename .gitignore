@@ -1,2 +1,3 @@
 TEST/segment_stm32f030_test/EWARM/segment_stm32f030_test/
-TEST/segment_stm32f030_test/EWARM/setting/
+TEST/segment_stm32f030_test/EWARM/settings/
+TEST/segment_stm32f030_test/EWARM/segment_stm32f030_test.dep
