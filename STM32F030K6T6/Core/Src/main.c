@@ -53,7 +53,7 @@ osThreadId uartTaskHandle;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
-void StartDefaultTask(void const * argument);
+void StartMainTask(void const * argument);
 void StartSubTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
@@ -116,7 +116,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of ledTask */
-  osThreadDef(ledTask, StartDefaultTask, osPriorityNormal, 0, 96);
+  osThreadDef(ledTask, StartMainTask, osPriorityNormal, 0, 96);
   ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
   /* definition and creation of uartTask */
@@ -297,14 +297,14 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE END 4 */
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartMainTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the ledTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+/* USER CODE END Header_StartMainTask */
+void StartMainTask(void const * argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
