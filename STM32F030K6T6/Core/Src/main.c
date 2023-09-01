@@ -43,7 +43,8 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart1;
 
-osThreadId defaultTaskHandle;
+osThreadId ledTaskHandle;
+osThreadId uartTaskHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -53,6 +54,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
+void StartSubTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -113,9 +115,13 @@ int main(void)
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 96);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* definition and creation of ledTask */
+  osThreadDef(ledTask, StartDefaultTask, osPriorityNormal, 0, 96);
+  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+
+  /* definition and creation of uartTask */
+  osThreadDef(uartTask, StartSubTask, osPriorityIdle, 0, 96);
+  uartTaskHandle = osThreadCreate(osThread(uartTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -223,11 +229,65 @@ static void MX_USART1_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(B11_GPIO_Port, B11_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, A2_Pin|B1_Pin|B2_Pin|B3_Pin
+                          |B4_Pin|B5_Pin|B6_Pin|B7_Pin
+                          |B8_Pin|B9_Pin|B10_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, A3_Pin|A4_Pin|A5_Pin|A6_Pin
+                          |A7_Pin|A8_Pin|A9_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : B11_Pin */
+  GPIO_InitStruct.Pin = B11_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(B11_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PWM_IN_Pin */
+  GPIO_InitStruct.Pin = PWM_IN_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(PWM_IN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : A1_Pin */
+  GPIO_InitStruct.Pin = A1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(A1_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : A2_Pin B1_Pin B2_Pin B3_Pin
+                           B4_Pin B5_Pin B6_Pin B7_Pin
+                           B8_Pin B9_Pin B10_Pin */
+  GPIO_InitStruct.Pin = A2_Pin|B1_Pin|B2_Pin|B3_Pin
+                          |B4_Pin|B5_Pin|B6_Pin|B7_Pin
+                          |B8_Pin|B9_Pin|B10_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : A3_Pin A4_Pin A5_Pin A6_Pin
+                           A7_Pin A8_Pin A9_Pin */
+  GPIO_InitStruct.Pin = A3_Pin|A4_Pin|A5_Pin|A6_Pin
+                          |A7_Pin|A8_Pin|A9_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
@@ -253,6 +313,24 @@ void StartDefaultTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartSubTask */
+/**
+* @brief Function implementing the uartTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSubTask */
+void StartSubTask(void const * argument)
+{
+  /* USER CODE BEGIN StartSubTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartSubTask */
 }
 
 /**
