@@ -359,14 +359,12 @@ static void MX_GPIO_Init(void)
   * @retval None
   */
 /* USER CODE END Header_startMainTask */
-void startMainTask(void *argument)
+__weak void startMainTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
-  initTask();
   /* Infinite loop */
   for(;;)
   {
-    mainTask(10);
     osDelay(1);
   }
   /* USER CODE END 5 */
@@ -379,13 +377,12 @@ void startMainTask(void *argument)
 * @retval None
 */
 /* USER CODE END Header_startSubTask */
-void startSubTask(void *argument)
+__weak void startSubTask(void *argument)
 {
   /* USER CODE BEGIN startSubTask */
   /* Infinite loop */
   for(;;)
   {
-    subTask(10);
     osDelay(1);
   }
   /* USER CODE END startSubTask */

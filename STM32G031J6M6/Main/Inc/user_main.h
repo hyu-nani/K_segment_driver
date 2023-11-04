@@ -7,10 +7,10 @@ extern "C" {
 
 #include <main.h>
 
-enum 
-{
-    CFALSE,
+enum {
+    CFALSE = 0,
     CTRUE,
+    CMAX,
 }CBOOL;
 
 #include "../Inc/flash.h"
