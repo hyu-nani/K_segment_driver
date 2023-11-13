@@ -17,12 +17,6 @@ C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Drivers/S
 -I
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/include
--I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2
--I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM0
--I
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Drivers/CMSIS/Device/ST/STM32G0xx/Include
 -I
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM/../Drivers/CMSIS/Include
@@ -38,12 +32,6 @@ C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Inc
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Drivers\STM32G0xx_HAL_Driver\Inc
 -I
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Drivers\STM32G0xx_HAL_Driver\Inc\Legacy
--I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Middlewares\Third_Party\FreeRTOS\Source\include
--I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2
--I
-C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM0
 -I
 C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Drivers\CMSIS\Device\ST\STM32G0xx\Include
 -I
@@ -356,7 +344,6 @@ C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Drivers\CMSIS\Incl
 -D__EDG_FLOAT80_ENABLING_POSSIBLE=0
 -D__EDG_FLOAT128_ENABLING_POSSIBLE=0
 -D__EDG_INT128_EXTENSIONS_ALLOWED=0
--DCMSIS_device_header=<stm32g0xx.h>
 -DUSE_HAL_DRIVER=1
 -DSTM32G031xx=1
 -D_DLIB_CONFIG_FILE_HEADER_NAME="C:\Program Files\IAR Systems\Embedded Workbench 9.1\arm\inc\c\DLib_Config_Full.h"

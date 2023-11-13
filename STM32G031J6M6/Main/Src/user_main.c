@@ -1,56 +1,95 @@
 #include "../Inc/user_main.h"
+USER_HANDLE_TYPEDEF_STRUCT uHandle;
+LED_HANDLE_TYPEDEF_STRUCT hled;
+extern SPI_HandleTypeDef hspi1;
+extern TIM_HandleTypeDef htim17;
 
+uint8_t invert = 0;
+uint8_t updown = 0;
+float delay = 50;
 
-void mainTask(uint16_t delay)
+CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
+#define segment_num 1
+
+void mainTask()
 {
-    casCade_Proc(delay);
+    if (CS_EN() == CTRUE)
+    {
+        uHandle.rx_data_flag = CFALSE;
+    }
+    if (uHandle.rx_data_flag == CFALSE)
+    {
+        HAL_SPI_Receive_IT(&hspi1, uHandle.rxData, sizeof(uint8_t)*segment_num);
+    }
+    else
+    {
+        if (uHandle.tx_led_flag == CFALSE)
+        {
+            uHandle.tx_led_flag = CTRUE;
+            show_segment(uHandle.rxData, segment_num);
+        }
+        else
+        {
+            HAL_Delay(1);
+        }
+    }
+    uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
+    uHandle.taskTick_p = HAL_GetTick();
+    uHandle.runTime = uHandle.taskTick_p;
 }
 
 void initTask(void)
 {
-
-}
-
-void subTask(uint16_t delay)
-{
-
-}
-
-/* USER CODE BEGIN Header_startMainTask */
-/**
-  * @brief  Function implementing the mainTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
-/* USER CODE END Header_startMainTask */
-void startMainTask(void *argument)
-{
-    /* USER CODE BEGIN 5 */
-    initTask();
-    /* Infinite loop */
-    for(;;)
+    set_module();
+    switch (uHandle.nowModule)
     {
-        mainTask(10);
-        osDelay(1);
+        case LED_WS2812:
+            //setTimARR(0, 76-1);
+            break;
+        
+        case LED_SK6812:
+            //setTimARR(0, 79-1);
+            break;
+        
+        default:
+            break;
     }
-    /* USER CODE END 5 */
+    for(uint8_t i = 0 ;i < (segment_num * 45) + 1; i++)
+    {
+        LED_show(0,0,0);
+    }
+    
 }
 
-/* USER CODE BEGIN Header_startSubTask */
-/**
-* @brief Function implementing the subTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_startSubTask */
-void startSubTask(void *argument)
+void set_module(void)
 {
-    /* USER CODE BEGIN startSubTask */
-    /* Infinite loop */
-    for(;;)
+    #ifdef WS2812
+    uHandle.nowModule = LED_WS2812;
+    #elif SK6812
+    uHandle.nowModule = LED_SK6812;
+    #endif
+}
+
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+{
+    HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    hled.dataSendFlag = 0;
+}
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI1)
     {
-        subTask(10);
-        osDelay(1);
+        uHandle.rx_data_flag = CTRUE;
+        uHandle.tx_led_flag = CFALSE;
     }
-    /* USER CODE END startSubTask */
+}
+
+void dataSendFlag(uint8_t flag)
+{
+    hled.dataSendFlag = flag;
+}
+
+uint8_t getDataSendFlag(void)
+{
+    return hled.dataSendFlag;
 }

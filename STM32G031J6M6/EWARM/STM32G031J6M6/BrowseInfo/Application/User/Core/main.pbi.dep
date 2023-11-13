@@ -41,17 +41,9 @@ C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\STM32G031J6M
   C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_spi_ex.h \
   C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_tim.h \
   C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Drivers\STM32G0xx_HAL_Driver\Inc\stm32g0xx_hal_tim_ex.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Core\Inc\FreeRTOSConfig.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\portable.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM0\portmacro.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\task.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\include\list.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\EWARM\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.h \
   C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\user_main.h \
+  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\support.h \
   C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\flash.h \
-  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\SPI.h
+  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\SPI.h \
+  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\neopixel.h \
+  C:\Users\cube_\OneDrive\Github\K_segment_driver\STM32G031J6M6\Core\Src\..\..\Main\Inc\..\Inc\tim.h

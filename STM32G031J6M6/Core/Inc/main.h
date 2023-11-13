@@ -59,14 +59,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define WS2812_Pin GPIO_PIN_8
-#define WS2812_GPIO_Port GPIOB
-#define SPI_SCK_Pin GPIO_PIN_1
-#define SPI_SCK_GPIO_Port GPIOA
-#define SPI_DIN_Pin GPIO_PIN_11
-#define SPI_DIN_GPIO_Port GPIOA
-#define SPI_DOUT_Pin GPIO_PIN_12
-#define SPI_DOUT_GPIO_Port GPIOA
+#define SPI1_CS_Pin GPIO_PIN_11
+#define SPI1_CS_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

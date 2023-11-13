@@ -5,22 +5,15 @@
 extern "C" {
 #endif
 
-#include <main.h>
-  
-typedef struct 
-{
-    uint32_t runTime;
-    uint32_t defaultDelay;
+#include "main.h"
 
-    struct
-    {
-        uint16_t head;
-        uint16_t tail;
-    }ringBuffer;
-    
-}SPI_HANDLE_TYPEDEF_STRUCT;
+#define save_word_num 45
 
-void casCade_Proc(uint16_t delay);
+
+/* data */
+extern uint8_t led_idx[save_word_num];
+extern uint32_t led_segment[save_word_num];
+extern uint16_t led_side[save_word_num];
 
 #ifdef __cplusplus
 }

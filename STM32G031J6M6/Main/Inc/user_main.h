@@ -5,20 +5,41 @@
 extern "C" {
 #endif
 
-#include <main.h>
-
-enum {
-    CFALSE = 0,
-    CTRUE,
-    CMAX,
-}CBOOL;
-
+#include "main.h"
+#include "../Inc/support.h"
 #include "../Inc/flash.h"
 #include "../Inc/SPI.h"
+#include "../Inc/neopixel.h"
+#include "../Inc/tim.h"
 
-void mainTask(uint16_t delay);
+
+typedef struct 
+{
+    uint32_t runTime;
+    uint32_t LEDSendInterval;
+    uint32_t taskTick_p;
+    uint32_t taskTick;
+
+    uint8_t* rxData;
+    CBOOL rx_data_flag;
+    CBOOL tx_led_flag;
+
+    LED_moduleList nowModule;
+} USER_HANDLE_TYPEDEF_STRUCT;
+
+typedef struct {
+    uint8_t dataSendFlag;
+    uint8_t LEDbit;
+    uint16_t LEDcount;
+} LED_HANDLE_TYPEDEF_STRUCT;
+
+void mainTask(void);
 void initTask(void);
-void subTask(uint16_t delay);
+void set_module(void);
+void LED_sendEnd(void);
+void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim);
+void dataSendFlag(uint8_t flag);
+uint8_t getDataSendFlag(void);
 
 #ifdef __cplusplus
 }

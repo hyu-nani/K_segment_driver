@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/cube_/OneDrive/Github/K_segment_driver/STM32G031J6M6/Core/Src",
-      "program": "c:/Users/cube_/OneDrive/Github/K_segment_driver/STM32G031J6M6/Core/Src/build/Debug/outDebug",
+      "cwd": "c:/Users/cube_/OneDrive/Github/K_segment_driver/STM32G031J6M6/Main/Src",
+      "program": "c:/Users/cube_/OneDrive/Github/K_segment_driver/STM32G031J6M6/Main/Src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

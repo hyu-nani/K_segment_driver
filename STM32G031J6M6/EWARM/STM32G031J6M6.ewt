@@ -1439,10 +1439,10 @@
             <group>
                 <name>Core</name>
                 <file>
-                    <name>$PROJ_DIR$\..\Core\Src\app_freertos.c</name>
+                    <name>$PROJ_DIR$\..\Core\Src\main.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Core\Src\main.c</name>
+                    <name>$PROJ_DIR$\..\Core\Inc\main.h</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Core\Src\stm32g0xx_hal_msp.c</name>
@@ -1456,7 +1456,19 @@
                 <group>
                     <name>Inc</name>
                     <file>
+                        <name>$PROJ_DIR$\..\Main\Inc\flash.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Inc\neopixel.h</name>
+                    </file>
+                    <file>
                         <name>$PROJ_DIR$\..\Main\Inc\SPI.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Inc\support.h</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Inc\tim.h</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\Main\Inc\user_main.h</name>
@@ -1465,7 +1477,19 @@
                 <group>
                     <name>Src</name>
                     <file>
-                        <name>$PROJ_DIR$\..\Main\Src\SPI.c</name>
+                        <name>$PROJ_DIR$\..\Main\Src\flash.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Src\neopixel.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Src\spi.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Src\support.c</name>
+                    </file>
+                    <file>
+                        <name>$PROJ_DIR$\..\Main\Src\tim.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\Main\Src\user_main.c</name>
@@ -1537,45 +1561,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Drivers\STM32G0xx_HAL_Driver\Src\stm32g0xx_ll_rcc.c</name>
-            </file>
-        </group>
-    </group>
-    <group>
-        <name>Middlewares</name>
-        <group>
-            <name>FreeRTOS</name>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2\cmsis_os2.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\list.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM0\port.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM0\portasm.s</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
             </file>
         </group>
     </group>
