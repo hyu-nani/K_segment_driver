@@ -1,3 +1,6 @@
 TEST/segment_stm32f030_test/EWARM/segment_stm32f030_test/
 TEST/segment_stm32f030_test/EWARM/settings/
 TEST/segment_stm32f030_test/EWARM/segment_stm32f030_test.dep
+STM32G031J6M6/EWARM/settings/
+STM32G031J6M6/EWARM/STM32G031J6M6.dep
+STM32G031J6M6/EWARM/STM32G031J6M6/
