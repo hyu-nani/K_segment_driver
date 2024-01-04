@@ -1,4 +1,10 @@
 #include "../Inc/user_main.h"
+
+#include "../Inc/flash.h"
+#include "../Inc/SPI.h"
+#include "../Inc/led.h"
+#include "../Inc/tim.h"
+
 USER_HANDLE_TYPEDEF_STRUCT uHandle;
 LED_HANDLE_TYPEDEF_STRUCT hled;
 extern SPI_HandleTypeDef hspi1;
@@ -13,6 +19,18 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 
 void mainTask()
 {
+    LED_showSegment('1',1,100,0,0);
+    LED_showSegment('2',2,100,0,0);
+    LED_showSegment('3',3,100,0,0);
+    LED_showSegment('4',4,100,0,0);
+    LED_showSegment('5',5,100,0,0);
+    HAL_Delay(1000);
+    LED_showSegment('A',1,100,0,0);
+    LED_showSegment('B',2,100,0,0);
+    LED_showSegment('C',3,100,0,0);
+    LED_showSegment('D',4,100,0,0);
+    LED_showSegment('E',5,100,0,0);
+    HAL_Delay(1000);
     if (CS_EN() == CTRUE)
     {
         uHandle.rx_data_flag = CFALSE;
@@ -26,7 +44,7 @@ void mainTask()
         if (uHandle.tx_led_flag == CFALSE)
         {
             uHandle.tx_led_flag = CTRUE;
-            show_segment(uHandle.rxData, segment_num);
+            //show_segment(uHandle.rxData, segment_num);
         }
         else
         {
@@ -54,11 +72,24 @@ void initTask(void)
         default:
             break;
     }
-    for(uint8_t i = 0 ;i < (segment_num * 45) + 1; i++)
+    for(int i = 0; i < MAX_BRIGHT; i++)
     {
-        LED_show(0,0,0);
+        LED_showSegment('a',1,i,i,i);
+        LED_showSegment('a',2,i,i,i);
+        LED_showSegment('a',3,i,i,i);
+        LED_showSegment('a',4,i,i,i);
+        LED_showSegment('a',5,i,i,i);
+        HAL_Delay(5);
     }
-    
+    for(int i = MAX_BRIGHT; i >= 0; i--)
+    {
+        LED_showSegment('a',1,i,i,i);
+        LED_showSegment('a',2,i,i,i);
+        LED_showSegment('a',3,i,i,i);
+        LED_showSegment('a',4,i,i,i);
+        LED_showSegment('a',5,i,i,i);
+        HAL_Delay(5);
+    }
 }
 
 void set_module(void)

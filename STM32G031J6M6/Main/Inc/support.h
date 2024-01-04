@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+
 /* LED MODULE */
 #define WS2812
 
@@ -20,8 +21,9 @@ extern "C" {
 #define DMA_BUFF_SIZE   32 + 1
 #endif
 
-#define NUM_PIXELS  45
-
+#define NUM_PIXELS_PER_UNIT  45
+#define NUM_UNIT 5
+#define MAX_BRIGHT 180
 typedef enum {
     CFALSE = 0,
     CTRUE,

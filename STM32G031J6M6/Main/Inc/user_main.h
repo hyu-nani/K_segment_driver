@@ -5,13 +5,8 @@
 extern "C" {
 #endif
 
-#include "main.h"
 #include "../Inc/support.h"
-#include "../Inc/flash.h"
-#include "../Inc/SPI.h"
-#include "../Inc/neopixel.h"
-#include "../Inc/tim.h"
-
+#include "main.h"
 
 typedef struct 
 {

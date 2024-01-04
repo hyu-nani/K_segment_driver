@@ -1459,10 +1459,10 @@
                         <name>$PROJ_DIR$\..\Main\Inc\flash.h</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\..\Main\Inc\neopixel.h</name>
+                        <name>$PROJ_DIR$\..\Main\Inc\led.h</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\..\Main\Inc\SPI.h</name>
+                        <name>$PROJ_DIR$\..\Main\Inc\spi.h</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\Main\Inc\support.h</name>
@@ -1480,7 +1480,7 @@
                         <name>$PROJ_DIR$\..\Main\Src\flash.c</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\..\Main\Src\neopixel.c</name>
+                        <name>$PROJ_DIR$\..\Main\Src\led.c</name>
                     </file>
                     <file>
                         <name>$PROJ_DIR$\..\Main\Src\spi.c</name>
