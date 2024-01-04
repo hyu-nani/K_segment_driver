@@ -31,6 +31,18 @@ void mainTask()
     LED_showSegment('D',4,100,0,0);
     LED_showSegment('E',5,100,0,0);
     HAL_Delay(1000);
+    LED_showSegment('A',1,100,0,0);
+    LED_showSegment('P',2,100,0,0);
+    LED_showSegment('P',3,100,0,0);
+    LED_showSegment('L',4,100,0,0);
+    LED_showSegment('E',5,100,0,0);
+    HAL_Delay(1000);
+    LED_showSegment('B',1,100,0,0);
+    LED_showSegment('A',2,100,0,0);
+    LED_showSegment('N',3,100,0,0);
+    LED_showSegment('A',4,100,0,0);
+    LED_showSegment('E',5,100,0,0);
+    HAL_Delay(1000);
     if (CS_EN() == CTRUE)
     {
         uHandle.rx_data_flag = CFALSE;
