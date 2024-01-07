@@ -19,30 +19,8 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 
 void mainTask()
 {
-    LED_showSegment('1',1,100,0,0);
-    LED_showSegment('2',2,100,0,0);
-    LED_showSegment('3',3,100,0,0);
-    LED_showSegment('4',4,100,0,0);
-    LED_showSegment('5',5,100,0,0);
-    HAL_Delay(1000);
-    LED_showSegment('A',1,100,0,0);
-    LED_showSegment('B',2,100,0,0);
-    LED_showSegment('C',3,100,0,0);
-    LED_showSegment('D',4,100,0,0);
-    LED_showSegment('E',5,100,0,0);
-    HAL_Delay(1000);
-    LED_showSegment('A',1,100,0,0);
-    LED_showSegment('P',2,100,0,0);
-    LED_showSegment('P',3,100,0,0);
-    LED_showSegment('L',4,100,0,0);
-    LED_showSegment('E',5,100,0,0);
-    HAL_Delay(1000);
-    LED_showSegment('B',1,100,0,0);
-    LED_showSegment('A',2,100,0,0);
-    LED_showSegment('N',3,100,0,0);
-    LED_showSegment('A',4,100,0,0);
-    LED_showSegment('E',5,100,0,0);
-    HAL_Delay(1000);
+    HAL_Delay(50);
+    LED_showSegment("NANIa",1,200,200,0,20+(rand() % 20));
     if (CS_EN() == CTRUE)
     {
         uHandle.rx_data_flag = CFALSE;
@@ -84,24 +62,32 @@ void initTask(void)
         default:
             break;
     }
-    for(int i = 0; i < MAX_BRIGHT; i++)
+
+    time_t t;
+    srand((unsigned) time(&t));
+
+    LED_allOff();
+
+    HAL_Delay(100);
+    /*
+    for(int i = 0; i < 100; i++)
     {
-        LED_showSegment('a',1,i,i,i);
-        LED_showSegment('a',2,i,i,i);
-        LED_showSegment('a',3,i,i,i);
-        LED_showSegment('a',4,i,i,i);
-        LED_showSegment('a',5,i,i,i);
-        HAL_Delay(5);
+        LED_showSegment('a',1,255,255,255,i);
+        LED_showSegment('a',2,255,255,255,i);
+        LED_showSegment('a',3,255,255,255,i);
+        LED_showSegment('a',4,255,255,255,i);
+        LED_showSegment('a',5,255,255,255,i);
+        HAL_Delay(10);
     }
-    for(int i = MAX_BRIGHT; i >= 0; i--)
+    for(int i = 100; i >= 0; i--)
     {
-        LED_showSegment('a',1,i,i,i);
-        LED_showSegment('a',2,i,i,i);
-        LED_showSegment('a',3,i,i,i);
-        LED_showSegment('a',4,i,i,i);
-        LED_showSegment('a',5,i,i,i);
-        HAL_Delay(5);
-    }
+        LED_showSegment('a',1,255,255,255,i);
+        LED_showSegment('a',2,255,255,255,i);
+        LED_showSegment('a',3,255,255,255,i);
+        LED_showSegment('a',4,255,255,255,i);
+        LED_showSegment('a',5,255,255,255,i);
+        HAL_Delay(10);
+    }*/
 }
 
 void set_module(void)
