@@ -3,7 +3,7 @@
 extern TIM_HandleTypeDef htim17;
 DATA_HANDLE_TYPEDEF_STRUCT led;
 
-static char ascii_table_idx[] = {
+static uint8_t ascii_table_idx[] = {
 	' ',
 	'0',
 	'1',
@@ -290,6 +290,76 @@ void LED_showSegment(char ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint
 				else
 				{
 					LED_sendData(0, 0, 0);
+				}
+				side = (side << 1);
+			}
+			i++;
+		}
+	}
+}
+
+/* @brief led show segment(invert)
+ * @note 
+ * @param ch a ascii textIdx
+ * @param num number unit of segment
+ * @param led_R 0 - 255
+ * @param led_G 0 - 255
+ * @param led_B 0 - 255
+ * @param led_bright 0 - 100 [%]
+ */
+void LED_showSegment_invert(char ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
+{
+	led_bright = (led_bright > 100) ? 100 : led_bright;
+	led_R = (uint8_t)((float)led_R * MAX_BRIGHT / 255.0f * (float)led_bright / 100.0f);
+	led_G = (uint8_t)((float)led_G * MAX_BRIGHT / 255.0f * (float)led_bright / 100.0f);
+	led_B = (uint8_t)((float)led_B * MAX_BRIGHT / 255.0f * (float)led_bright / 100.0f);
+	led.r = led_R;
+	led.g = led_G;
+	led.b = led_B;
+
+	int textIdx;
+	uint16_t side;
+	uint32_t cent;
+	int i=0;
+	for (int num = 0; num < NUM_UNIT; num++)
+	{
+		for (int idx = 0; idx < MAX_IDX; idx++)
+		{
+			if (ascii_table_idx[idx] == ch[num])
+			{
+				led.idx_list[num] = idx;
+				break;
+			}
+		}
+	}
+	LED_sendData(0, 0, 0);
+	for (int num = 0 ; num < NUM_UNIT; num++)
+	{
+		side = led_side[led.idx_list[num]];
+		cent = led_segment[led.idx_list[num]];
+		for (int pixelNum = 0; pixelNum < 45; pixelNum++)
+		{
+			if (pixelNum >= 8 && pixelNum < 37)
+			{
+				if (cent & 0x80000000)
+				{
+					LED_sendData(0, 0, 0);
+				}
+				else
+				{
+					LED_sendData(led.r,led.g,led.b);
+				}
+				cent = (cent << 1);
+			}
+			else
+			{
+				if (side & 0x8000)
+				{
+					LED_sendData(0, 0, 0);
+				}
+				else
+				{
+					LED_sendData(led.r,led.g,led.b);
 				}
 				side = (side << 1);
 			}

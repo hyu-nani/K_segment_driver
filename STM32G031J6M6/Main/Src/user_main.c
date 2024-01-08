@@ -20,7 +20,7 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 void mainTask()
 {
     HAL_Delay(50);
-    LED_showSegment("NANIa",1,200,200,0,20+(rand() % 20));
+    LED_showSegment_invert("17:55",1,200,160,0,10+(rand() % 4));
     if (CS_EN() == CTRUE)
     {
         uHandle.rx_data_flag = CFALSE;
@@ -69,25 +69,6 @@ void initTask(void)
     LED_allOff();
 
     HAL_Delay(100);
-    /*
-    for(int i = 0; i < 100; i++)
-    {
-        LED_showSegment('a',1,255,255,255,i);
-        LED_showSegment('a',2,255,255,255,i);
-        LED_showSegment('a',3,255,255,255,i);
-        LED_showSegment('a',4,255,255,255,i);
-        LED_showSegment('a',5,255,255,255,i);
-        HAL_Delay(10);
-    }
-    for(int i = 100; i >= 0; i--)
-    {
-        LED_showSegment('a',1,255,255,255,i);
-        LED_showSegment('a',2,255,255,255,i);
-        LED_showSegment('a',3,255,255,255,i);
-        LED_showSegment('a',4,255,255,255,i);
-        LED_showSegment('a',5,255,255,255,i);
-        HAL_Delay(10);
-    }*/
 }
 
 void set_module(void)

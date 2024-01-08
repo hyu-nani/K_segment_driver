@@ -48,7 +48,7 @@ typedef struct
 
 
 /* data */
-static char ascii_table_idx[MAX_IDX];
+static uint8_t ascii_table_idx[MAX_IDX];
 static uint32_t led_segment[MAX_IDX];  
 static uint16_t led_side[MAX_IDX];
 static float led_segment_mask[NUM_PIXELS_PER_UNIT];
@@ -57,6 +57,7 @@ void PROC_LED(void);
 void append_buf(void);
 void LED_sendData(uint8_t Red, uint8_t Green, uint8_t Blue);
 void LED_showSegment(char ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
+void LED_showSegment_invert(char ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);
