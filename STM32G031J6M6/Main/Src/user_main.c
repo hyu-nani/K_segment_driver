@@ -19,8 +19,9 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 
 void mainTask()
 {
-    HAL_Delay(50);
-    LED_showSegment_invert("17:55",1,200,160,0,10+(rand() % 4));
+    HAL_Delay(100);
+    LED_showSegment_invert("17:55",1,hled.color_r,hled.color_g,hled.color_b,40+(rand() % 10));
+    //LED_rainbow();
     if (CS_EN() == CTRUE)
     {
         uHandle.rx_data_flag = CFALSE;
@@ -67,6 +68,9 @@ void initTask(void)
     srand((unsigned) time(&t));
 
     LED_allOff();
+    hled.color_r = 200;
+    hled.color_g = 120;
+    hled.color_b = 30;
 
     HAL_Delay(100);
 }

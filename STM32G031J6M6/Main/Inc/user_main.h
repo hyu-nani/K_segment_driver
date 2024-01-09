@@ -25,6 +25,9 @@ typedef struct
 typedef struct {
     uint8_t dataSendFlag;
     uint8_t LEDbit;
+    uint8_t color_r;
+    uint8_t color_g;
+    uint8_t color_b;
     uint16_t LEDcount;
 } LED_HANDLE_TYPEDEF_STRUCT;
 
