@@ -71,7 +71,7 @@ static uint32_t led_segment[] = {
 	0x1C230830, //0001 1100 0010 0011 0000 1000 0011 0,F
 	0x390BC4E0, //0011 1001 0000 1011 1100 0100 1110 0,G
 	0x6CA729B0, //0110 1100 1010 0111 0010 1001 1011 0,H
-	0x30421040, //0001 0000 0100 0010 0001 0000 0100 0,I
+	0x10421040, //0001 0000 0100 0010 0001 0000 0100 0,I
 	0x0C2108E0, //0000 1100 0010 0001 0000 1000 1110 0,J
 	0x6CC431B0, //0110 1100 1100 0100 0011 0001 1011 0,K
 	0x608421C0, //0110 0000 1000 0100 0010 0001 1100 0,L
@@ -271,7 +271,7 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
 		{
-			if (ascii_table_idx[idx] == *ch)
+			if (ascii_table_idx[idx] == *(ch + num))
 			{
 				led.idx_list[num] = idx;
 				ch++;
@@ -333,7 +333,7 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
  * @param led_B 0 - 255
  * @param led_bright 0 - 100 [%]
  */
-void LED_showSegment_invert(uint8_t ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
+void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
 {
 	led_bright = (led_bright > 100) ? 100 : led_bright;
 	led_R = (uint8_t)((float)led_R * MAX_BRIGHT / 255.0f * (float)led_bright / 100.0f);
@@ -351,7 +351,7 @@ void LED_showSegment_invert(uint8_t ch[5], uint8_t num, uint8_t led_R, uint8_t l
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
 		{
-			if (ascii_table_idx[idx] == ch[num])
+			if (ascii_table_idx[idx] == *(ch + num))
 			{
 				led.idx_list[num] = idx;
 				break;

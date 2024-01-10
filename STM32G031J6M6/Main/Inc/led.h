@@ -60,7 +60,7 @@ void PROC_LED(void);
 void append_buf(void);
 void LED_show(void);
 void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
-void LED_showSegment_invert(uint8_t ch[5], uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
+void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);
