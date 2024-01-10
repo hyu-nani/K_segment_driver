@@ -274,7 +274,6 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 			if (ascii_table_idx[idx] == *(ch + num))
 			{
 				led.idx_list[num] = idx;
-				ch++;
 				break;
 			}
 		}

@@ -12,7 +12,7 @@ extern TIM_HandleTypeDef htim17;
 
 uint8_t inv = 0;
 float delay = 50;
-uint8_t* arr = "NEVER STOP DREAMING";
+uint8_t* arr = "     NEVER STOP DREAMING     $";
 
 CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
 #define segment_num 1
@@ -24,10 +24,10 @@ void mainTask()
     hled.color_g = 120;//120
     hled.color_b = 30;//30
     
-    LED_showSegment_invert((arr+inv),1,hled.color_r,hled.color_g,hled.color_b,100);
-    HAL_Delay(300);
+    LED_showSegment((arr+inv),1,hled.color_r,hled.color_g,hled.color_b,50);
+    HAL_Delay(500);
     inv++;
-    if (inv > 23)
+    if (inv > 30)
     inv = 0;
     //LED_rainbow();
     if (CS_EN() == CTRUE)
@@ -57,6 +57,7 @@ void mainTask()
 
 void initTask(void)
 {
+    
     set_module();
     switch (uHandle.nowModule)
     {
@@ -72,8 +73,8 @@ void initTask(void)
             break;
     }
 
-    time_t t;
-    srand((unsigned) time(&t));
+    //time_t t;
+    //srand((unsigned) time(&t)); //이거 있으면 디버거 없이 부팅안됨.
 
     LED_allOff();
     hled.color_r = 255;//200
