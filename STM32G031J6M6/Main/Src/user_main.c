@@ -10,8 +10,7 @@ LED_HANDLE_TYPEDEF_STRUCT hled;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim17;
 
-uint8_t invert = 0;
-uint8_t updown = 0;
+uint8_t inv = 0;
 float delay = 50;
 
 CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
@@ -19,8 +18,14 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 
 void mainTask()
 {
-    HAL_Delay(100);
-    LED_showSegment_invert("17:55",1,hled.color_r,hled.color_g,hled.color_b,40+(rand() % 10));
+    
+    hled.color_r = 200;//200
+    hled.color_g = 120;//120
+    hled.color_b = 30;//30
+    uint8_t* arr = "THE EVERY THING IS OK.";
+    LED_showSegment_invert(*(&arr+inv),1,hled.color_r,hled.color_g,hled.color_b,100);
+    HAL_Delay(5000);
+    inv++;
     //LED_rainbow();
     if (CS_EN() == CTRUE)
     {
@@ -68,9 +73,9 @@ void initTask(void)
     srand((unsigned) time(&t));
 
     LED_allOff();
-    hled.color_r = 200;
-    hled.color_g = 120;
-    hled.color_b = 30;
+    hled.color_r = 255;//200
+    hled.color_g = 0;//120
+    hled.color_b = 0;//30
 
     HAL_Delay(100);
 }
