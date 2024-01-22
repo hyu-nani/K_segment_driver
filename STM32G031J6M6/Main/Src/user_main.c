@@ -12,36 +12,23 @@ extern TIM_HandleTypeDef htim17;
 
 uint8_t inv = 0;
 float delay = 50;
-uint8_t* init = "aaaaa";
-uint8_t* arr1 = "HOUSE";
-uint8_t* arr2 = "PARTY";
-
+uint8_t* arr = "     NEVER STOP DREAMING     $";
 
 CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
 #define segment_num 1
 
 void mainTask()
 {
-    for (int i = 0 ; i < 100 ; i++)
-    {
-        LED_showSegment((arr1),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
-    HAL_Delay(10000);
-    for (int i = 100 ; i > 0 ; i--)
-    {
-        LED_showSegment((arr1),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
-    HAL_Delay(100);
-    for (int i = 0 ; i < 100 ; i++)
-    {
-        LED_showSegment((arr2),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
-    HAL_Delay(10000);
-    for (int i = 100 ; i > 0 ; i--)
-    {
-        LED_showSegment((arr2),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
-    HAL_Delay(100);
+    
+    hled.color_r = 200;//200
+    hled.color_g = 120;//120
+    hled.color_b = 30;//30
+    
+    LED_showSegment((arr+inv),1,hled.color_r,hled.color_g,hled.color_b,50);
+    HAL_Delay(500);
+    inv++;
+    if (inv > 30)
+    inv = 0;
     //LED_rainbow();
     if (CS_EN() == CTRUE)
     {
@@ -91,18 +78,10 @@ void initTask(void)
 
     LED_allOff();
     hled.color_r = 255;//200
-    hled.color_g = 100;//120
-    hled.color_b = 50;//30
-    hled.bright = 100;
-    for (int i = 0 ; i < 100 ; i++)
-    {
-        LED_showSegment((init),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
+    hled.color_g = 0;//120
+    hled.color_b = 0;//30
+
     HAL_Delay(100);
-    for (int i = 100 ; i > 0 ; i--)
-    {
-        LED_showSegment((init),1,hled.color_r,hled.color_g,hled.color_b,i);
-    }
 }
 
 void set_module(void)
