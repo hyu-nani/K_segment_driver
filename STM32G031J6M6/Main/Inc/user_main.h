@@ -28,8 +28,11 @@ typedef struct {
     uint8_t color_r;
     uint8_t color_g;
     uint8_t color_b;
+    uint8_t bright;
     uint16_t LEDcount;
 } LED_HANDLE_TYPEDEF_STRUCT;
+
+
 
 void mainTask(void);
 void initTask(void);

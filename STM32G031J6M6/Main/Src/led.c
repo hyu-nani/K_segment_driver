@@ -408,7 +408,7 @@ void LED_allOff(void)
 	{
 		LED_setColor(i, 0, 0, 0, 0);
 	}
-        LED_show();
+    LED_show();
 	HAL_Delay(1);
 }
 
