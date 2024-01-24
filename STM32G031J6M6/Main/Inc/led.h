@@ -45,20 +45,22 @@ typedef struct
     uint8_t     Buf[RING_BUF_SIZE];
     uint8_t     bright_now[ALL_UNIT];
     uint8_t     bright_dest[ALL_UNIT];
+    uint8_t     bright_orig[ALL_UNIT];
     CBOOL       compare;
-    uint16_t head;
-    uint16_t tail;
+    float       bright_dx;
+    uint16_t    head;
+    uint16_t    tail;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 
 
 /* data */
-static uint8_t ascii_table_idx[MAX_IDX];
+static uint8_t  ascii_table_idx[MAX_IDX];
 static uint32_t led_segment[MAX_IDX];  
 static uint16_t led_side[MAX_IDX];
-static float led_segment_mask_r[NUM_PIXELS_PER_UNIT];
-static float led_segment_mask_g[NUM_PIXELS_PER_UNIT];
-static float led_segment_mask_b[NUM_PIXELS_PER_UNIT];
+static float    led_segment_mask_r[NUM_PIXELS_PER_UNIT];
+static float    led_segment_mask_g[NUM_PIXELS_PER_UNIT];
+static float    led_segment_mask_b[NUM_PIXELS_PER_UNIT];
 
 void PROC_LED(void);
 void append_buf(void);

@@ -28,8 +28,17 @@ typedef struct {
     uint8_t color_r;
     uint8_t color_g;
     uint8_t color_b;
+    uint8_t bright;
     uint16_t LEDcount;
 } LED_HANDLE_TYPEDEF_STRUCT;
+
+typedef struct {
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t second;
+    
+    uint8_t arr[5];
+} TIME_HANDLE_TYPEDEF_STRUCT;
 
 void mainTask(void);
 void initTask(void);

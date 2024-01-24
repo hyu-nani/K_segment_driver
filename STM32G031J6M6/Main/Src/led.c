@@ -260,81 +260,6 @@ void PROC_LED(void)
  */
 void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
 {
-	led.r = led_R;
-	led.g = led_G;
-	led.b = led_B;
-
-	int textIdx;
-	uint16_t side;
-	uint32_t cent;
-	int i;
-	for (int num = 0; num < NUM_UNIT; num++)
-	{
-		for (int idx = 0; idx < MAX_IDX; idx++)
-		{
-			if (ascii_table_idx[idx] == *(ch + num))
-			{
-				led.idx_list[num] = idx;
-				break;
-			}
-		}
-	}
-	for (int num = 0 ; num < NUM_UNIT; num++)
-	{
-		side = led_side[led.idx_list[num]];
-		cent = led_segment[led.idx_list[num]];
-		i = 0;
-		for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
-		{
-			if (pixelNum >= 8 && pixelNum < 37)
-			{
-				if (cent & 0x80000000)
-				{
-					LED_setColor((pixelNum + num * NUM_PIXELS_PER_UNIT), 
-								(uint8_t)((float)led.r * led_segment_mask_r[i]), 
-								(uint8_t)((float)led.g * led_segment_mask_g[i]), 
-								(uint8_t)((float)led.b * led_segment_mask_b[i]), 
-								led_bright);
-				}
-				else
-				{
-					LED_setColor(pixelNum + num * NUM_PIXELS_PER_UNIT, 0, 0, 0, led_bright);
-				}
-				cent = (cent << 1);
-			}
-			else
-			{
-				if (side & 0x8000)
-				{
-					LED_setColor((pixelNum + num * NUM_PIXELS_PER_UNIT), 
-								(uint8_t)((float)led.r * led_segment_mask_r[i]), 
-								(uint8_t)((float)led.g * led_segment_mask_g[i]), 
-								(uint8_t)((float)led.b * led_segment_mask_b[i]), 
-								led_bright);	
-				}
-				else
-				{
-					LED_setColor(pixelNum + num * NUM_PIXELS_PER_UNIT, 0, 0, 0, led_bright);
-				}
-				side = (side << 1);
-			}
-			i++;
-		}
-	}
-	LED_show();
-}
-
-/* @brief led show segment(invert)
- * @note 
- * @param ch a ascii textIdx
- * @param num number unit of segment
- * @param led_R 0 - 255
- * @param led_G 0 - 255
- * @param led_B 0 - 255
- * @param led_bright 0 - 100 [%]
- */
-void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
-{
 	led_bright = (led_bright > 100) ? 100 : led_bright;
 	led.r = led_R;
 	led.g = led_G;
@@ -387,21 +312,25 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 			}
 		}
 	}
+	for (i = 0; i < ALL_UNIT; i++)
+	{
+		led.bright_orig[i] = led.bright_now[i];
+	}
 	while (1)
 	{
 		led.compare = CTRUE;
 		for (i = 0; i < ALL_UNIT; i++)
 		{
-			if (led.bright_dest[i] != led.bright_now[i])
+			if (abs(led.bright_dest[i] - led.bright_now[i]) > 2)
 			{
 				led.compare = CFALSE;
 				if (led.bright_dest[i] < led.bright_now[i])
 				{
-					led.bright_now[i]--;
+					led.bright_now[i] -= (uint8_t)(fabs(led.bright_dest[i] - led.bright_orig[i]) * (1.0f - led.bright_dx));
 				}
 				if (led.bright_dest[i] > led.bright_now[i])
 				{
-					led.bright_now[i]++;
+					led.bright_now[i] += (uint8_t)(fabs(led.bright_dest[i] - led.bright_orig[i]) * (1.0f - led.bright_dx));
 				}
 			}
 		}
@@ -420,7 +349,115 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 									(uint8_t)((float)led.r * led_segment_mask_r[i]), 
 									(uint8_t)((float)led.g * led_segment_mask_g[i]), 
 									(uint8_t)((float)led.b * led_segment_mask_b[i]), 
-									led.bright_now[pixelNum + num * NUM_PIXELS_PER_UNIT]);
+									(uint8_t)led.bright_now[pixelNum + num * NUM_PIXELS_PER_UNIT]);
+				i++;
+			}
+		}
+		LED_show();
+	}
+}
+
+/* @brief led show segment(invert)
+ * @note 
+ * @param ch a ascii textIdx
+ * @param num number unit of segment
+ * @param led_R 0 - 255
+ * @param led_G 0 - 255
+ * @param led_B 0 - 255
+ * @param led_bright 0 - 100 [%]
+ */
+void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
+{
+	led_bright = (led_bright > 100) ? 100 : led_bright;
+	led.r = led_R;
+	led.g = led_G;
+	led.b = led_B;
+
+	int textIdx;
+	uint16_t side;
+	uint32_t cent;
+	int i;
+	for (int num = 0; num < NUM_UNIT; num++)
+	{
+		for (int idx = 0; idx < MAX_IDX; idx++)
+		{
+			if (ascii_table_idx[idx] == *(ch + num))
+			{
+				led.idx_list[num] = idx;
+				break;
+			}
+		}
+	}
+	for (int num = 0 ; num < NUM_UNIT; num++)
+	{
+		side = led_side[led.idx_list[num]];
+		cent = led_segment[led.idx_list[num]];
+		for (int pixelNum = 0; pixelNum < 45; pixelNum++)
+		{
+			if (pixelNum >= 8 && pixelNum < 37)
+			{
+				if (cent & 0x80000000)
+				{	
+					led.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+				}
+				else
+				{
+					led.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+				}
+				cent = (cent << 1);
+			}
+			else
+			{
+				if (side & 0x8000)
+				{
+					led.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+				}
+				else
+				{
+					led.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+				}
+				side = (side << 1);
+			}
+		}
+	}
+	for (i = 0; i < ALL_UNIT; i++)
+	{
+		led.bright_orig[i] = led.bright_now[i];
+	}
+	while (1)
+	{
+		led.compare = CTRUE;
+		for (i = 0; i < ALL_UNIT; i++)
+		{
+			if (abs(led.bright_dest[i] - led.bright_now[i]) > 2)
+			{
+				led.compare = CFALSE;
+				if (led.bright_dest[i] < led.bright_now[i])
+				{
+					led.bright_now[i] -= (uint8_t)(fabs(led.bright_dest[i] - led.bright_orig[i]) * (1.0f - led.bright_dx));
+				}
+				if (led.bright_dest[i] > led.bright_now[i])
+				{
+					led.bright_now[i] += (uint8_t)(fabs(led.bright_dest[i] - led.bright_orig[i]) * (1.0f - led.bright_dx));
+				}
+			}
+		}
+		if (led.compare == CTRUE)
+		{
+			break;
+		}
+		for (int num = 0 ; num < NUM_UNIT; num++)
+		{
+			side = led_side[led.idx_list[num]];
+			cent = led_segment[led.idx_list[num]];
+			i = 0;
+			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
+			{
+				LED_setColor((pixelNum + num * NUM_PIXELS_PER_UNIT), 
+									(uint8_t)((float)led.r * led_segment_mask_r[i]), 
+									(uint8_t)((float)led.g * led_segment_mask_g[i]), 
+									(uint8_t)((float)led.b * led_segment_mask_b[i]), 
+									(uint8_t)led.bright_now[pixelNum + num * NUM_PIXELS_PER_UNIT]);
 				i++;
 			}
 		}
