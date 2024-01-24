@@ -12,7 +12,7 @@ extern TIM_HandleTypeDef htim17;
 
 uint8_t inv = 0;
 float delay = 50;
-uint8_t* arr = "     NEVER STOP DREAMING     $";
+uint8_t* arr = "     SLEEP NOW PLEASE     $";
 
 CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
 #define segment_num 1
@@ -24,7 +24,7 @@ void mainTask()
     hled.color_g = 120;//120
     hled.color_b = 30;//30
     
-    LED_showSegment((arr+inv),1,hled.color_r,hled.color_g,hled.color_b,50);
+    LED_showSegment_invert((arr+inv),1,hled.color_r,hled.color_g,hled.color_b,50);
     HAL_Delay(500);
     inv++;
     if (inv > 30)

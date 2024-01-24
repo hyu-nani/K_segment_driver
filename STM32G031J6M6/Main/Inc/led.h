@@ -22,7 +22,6 @@ extern "C" {
 #define NEOPIXEL_ZERO           26      /* (ARR+1)*0.32 */
 #define NEOPIXEL_ONE            51      /* (ARR+1)*0.64 */
 #define DMA_BUFF_SIZE           24 + 1
-#define RING_BUF_SIZE           NUM_UNIT * NUM_PIXELS_PER_UNIT * 3
 #endif
 
 #ifdef SK6812
@@ -31,20 +30,24 @@ extern "C" {
 #define DMA_BUFF_SIZE           32 + 1
 #endif
 
+#define RING_BUF_SIZE           ALL_UNIT * 3
+
 /* private define ------------------------------------ */
 typedef struct 
 {
-    uint16_t idx;/* data */
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-    uint8_t idx_list[NUM_UNIT];
-    uint32_t dma_buf[DMA_BUFF_SIZE];
+    uint16_t    idx;/* data */
+    uint8_t     r;
+    uint8_t     g;
+    uint8_t     b;
+    uint8_t     idx_list[NUM_UNIT];
+    uint32_t    dma_buf[DMA_BUFF_SIZE];
 
-    uint8_t Buf[RING_BUF_SIZE];
+    uint8_t     Buf[RING_BUF_SIZE];
+    uint8_t     bright_now[ALL_UNIT];
+    uint8_t     bright_dest[ALL_UNIT];
+    CBOOL       compare;
     uint16_t head;
     uint16_t tail;
-
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 
