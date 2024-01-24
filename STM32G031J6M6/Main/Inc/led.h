@@ -9,25 +9,26 @@ extern "C" {
 #include "support.h"
 
 #define NUM_PIXELS_PER_UNIT     45
-#define NUM_UNIT 5
-#define MAX_BRIGHT 180.0f
-#define MIN_BRIGHT 4
+#define NUM_UNIT                5
+#define MAX_BRIGHT              180.0f
+#define MIN_BRIGHT              4
 #define MAX_IDX                 50
+#define ALL_UNIT                NUM_PIXELS_PER_UNIT*NUM_UNIT
   
 /* LED MODULE */
 #define WS2812
 
 #ifdef WS2812
-#define NEOPIXEL_ZERO   26      /* (ARR+1)*0.32 */
-#define NEOPIXEL_ONE    51      /* (ARR+1)*0.64 */
-#define DMA_BUFF_SIZE   24 + 1
-#define RING_BUF_SIZE   NUM_UNIT * NUM_PIXELS_PER_UNIT * 3
+#define NEOPIXEL_ZERO           26      /* (ARR+1)*0.32 */
+#define NEOPIXEL_ONE            51      /* (ARR+1)*0.64 */
+#define DMA_BUFF_SIZE           24 + 1
+#define RING_BUF_SIZE           NUM_UNIT * NUM_PIXELS_PER_UNIT * 3
 #endif
 
 #ifdef SK6812
-#define NEOPIXEL_ZERO   19      /* (ARR+1)*0.25 */
-#define NEOPIXEL_ONE    39      /* (ARR+1)*0.5 */
-#define DMA_BUFF_SIZE   32 + 1
+#define NEOPIXEL_ZERO           19      /* (ARR+1)*0.25 */
+#define NEOPIXEL_ONE            39      /* (ARR+1)*0.5 */
+#define DMA_BUFF_SIZE           32 + 1
 #endif
 
 /* private define ------------------------------------ */
