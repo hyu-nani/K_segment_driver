@@ -8,11 +8,11 @@ extern "C" {
 #include "main.h"
 #include "support.h"
 
-#define NUM_PIXELS_PER_UNIT  45
+#define NUM_PIXELS_PER_UNIT     45
 #define NUM_UNIT 5
 #define MAX_BRIGHT 180.0f
 #define MIN_BRIGHT 4
-#define MAX_IDX 50
+#define MAX_IDX                 50
   
 /* LED MODULE */
 #define WS2812
