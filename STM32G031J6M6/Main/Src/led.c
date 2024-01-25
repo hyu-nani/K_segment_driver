@@ -337,11 +337,11 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 				hled.compare = CFALSE;
 				if (hled.red_dest[i] < hled.red_now[i])
 				{
-					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) / hled.dx);
 				}
 			}
 			if (abs(hled.green_dest[i] - hled.green_now[i]) > 2)
@@ -349,11 +349,11 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 				hled.compare = CFALSE;
 				if (hled.green_dest[i] < hled.green_now[i])
 				{
-					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) / hled.dx);
 				}
 			}
 			if (abs(hled.blue_dest[i] - hled.blue_now[i]) > 2)
@@ -361,11 +361,11 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 				hled.compare = CFALSE;
 				if (hled.blue_dest[i] < hled.blue_now[i])
 				{
-					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) / hled.dx);
 				}
 			}
 		}
@@ -478,11 +478,11 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 				hled.compare = CFALSE;
 				if (hled.red_dest[i] < hled.red_now[i])
 				{
-					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) / hled.dx);
 				}
 			}
 			if (abs(hled.green_dest[i] - hled.green_now[i]) > 2)
@@ -490,11 +490,11 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 				hled.compare = CFALSE;
 				if (hled.green_dest[i] < hled.green_now[i])
 				{
-					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) / hled.dx);
 				}
 			}
 			if (abs(hled.blue_dest[i] - hled.blue_now[i]) > 2)
@@ -502,11 +502,11 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 				hled.compare = CFALSE;
 				if (hled.blue_dest[i] < hled.blue_now[i])
 				{
-					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) / hled.dx);
 				}
 				else
 				{
-					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) / hled.dx);
 				}
 			}
 		}

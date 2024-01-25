@@ -39,22 +39,22 @@ typedef struct
     uint8_t     r;
     uint8_t     g;
     uint8_t     b;
-    uint8_t     idx_list[NUM_UNIT];
-    uint32_t    dma_buf[DMA_BUFF_SIZE];
+    uint8_t     idx_list[NUM_UNIT];     
+    uint32_t    dma_buf[DMA_BUFF_SIZE]; //chort buf 
 
-    uint8_t     buf[RING_BUF_SIZE];
-    uint8_t     red_now[ALL_LED];
-    uint8_t     green_now[ALL_LED];
-    uint8_t     blue_now[ALL_LED];
+    uint8_t     buf[RING_BUF_SIZE];     //all buf
+    uint8_t     red_now[ALL_LED];       //current
+    uint8_t     green_now[ALL_LED];     //current
+    uint8_t     blue_now[ALL_LED];      //current
 
-    uint8_t     red_dest[ALL_LED];
-    uint8_t     red_orig[ALL_LED];
-    uint8_t     green_dest[ALL_LED];
-    uint8_t     green_orig[ALL_LED];
-    uint8_t     blue_dest[ALL_LED];
-    uint8_t     blue_orig[ALL_LED];
+    uint8_t     red_dest[ALL_LED];      //red destination 
+    uint8_t     red_orig[ALL_LED];      //red origin 
+    uint8_t     green_dest[ALL_LED];    //green destination
+    uint8_t     green_orig[ALL_LED];    //green origin
+    uint8_t     blue_dest[ALL_LED];     //blue destination
+    uint8_t     blue_orig[ALL_LED];     //blue origin
 
-    CBOOL       compare;
+    CBOOL       compare;           
     float       dx;
     uint16_t    head;
     uint16_t    tail;
