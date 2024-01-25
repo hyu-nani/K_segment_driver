@@ -17,28 +17,11 @@ float delay = 50;
 
 void mainTask()
 {
+    htime.indicate_tick = HAL_GetTick();
     while (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET)
-    {
-        uHandle.rx_data_flag = CFALSE;
-    }
-    if (uHandle.rx_data_flag == CFALSE)
     {
         HAL_SPI_Receive_IT(&hspi1, uHandle.rxData, sizeof(uint8_t)*num_protocol);
     }
-    else
-    {
-        if (uHandle.tx_led_flag == CFALSE)
-        {
-            uHandle.tx_led_flag = CTRUE;
-            //show_segment(uHandle.rxData, segment_num);
-        }
-        else
-        {
-            HAL_Delay(1);
-        }
-    }
-
-    htime.indicate_tick = HAL_GetTick();
 
     htime.second++;
     if (htime.second >= 60)
@@ -61,7 +44,7 @@ void mainTask()
     sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
 
     LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
-    HAL_Delay(1000 + htime.indicate_tick - HAL_GetTick());
+    HAL_Delay(htime.indicate_interval + htime.indicate_tick - HAL_GetTick());
 
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();
@@ -90,22 +73,24 @@ void initTask(void)
     //srand((unsigned) time(&t)); //이거 있으면 디버거 없이 부팅안됨.
 
     LED_allOff();
-    hledUSRM.color_r = 200;//200
-    hledUSRM.color_g = 120;//120
-    hledUSRM.color_b = 30;//30
-    hledUSRM.bright = 30;//30
+    hledUSRM.color_r = 200;
+    hledUSRM.color_g = 120;
+    hledUSRM.color_b = 30;
+    hledUSRM.bright = 30;
     htime.hour = 12;
     htime.minute = 30;
+    htime.indicate_interval = 1000;
+    SPI_init();
     LED_setDX(10);
 }
 
 void set_module(void)
 {
-    #ifdef WS2812
+#ifdef WS2812
     uHandle.nowModule = LED_WS2812;
-    #elif SK6812
+#elif SK6812
     uHandle.nowModule = LED_SK6812;
-    #endif
+#endif
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
@@ -113,12 +98,22 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
     HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
     hledUSRM.dataSendFlag = 0;
 }
+
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
     if (hspi->Instance == SPI1)
     {
+        SPI_Callback_spiRxComplete();
         uHandle.rx_data_flag = CTRUE;
         uHandle.tx_led_flag = CFALSE;
+    }
+}
+
+void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi)
+{
+    if (hspi->Instance == SPI1)
+    {
+        SPI_Callback_spiError();
     }
 }
 

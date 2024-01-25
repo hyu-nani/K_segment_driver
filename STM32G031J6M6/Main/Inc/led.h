@@ -56,8 +56,6 @@ typedef struct
 
     CBOOL       compare;           
     float       dx;
-    uint16_t    head;
-    uint16_t    tail;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 

@@ -1,4 +1,5 @@
 #include "../Inc/spi.h"
+#include <main.h>
 //static SPI_HANDLE_TYPEDEF_STRUCT sHandleSPI;
 /*
 Dec  Char                           Dec  Char     Dec  Char     Dec  Char
@@ -43,3 +44,116 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 #define ETX 3
 #define EOT 4
 #define ACK 5
+
+#define SPI_HANDLE          &spi1 
+#define SPI_IRQn            SPI1_IRQn
+#define SPI_RX_CNT          (SPI_HANDLE)->RxXferCount
+#define SPI_RX_LEN          BUFF_MAX_SMALL
+
+SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
+void SPI_PROC(uint32_t delay)
+{
+    sHandSPI.buffSmall_rx.len = Ring_subArrayLarge(&sHandSPI.ring_rx, sHandSPI.buff_pop.buf);
+
+	if (sHandSPI.buff_pop.len != 0)
+	{
+		if (sHandSPI != NULL && EXTC_Classification(sHandSPI.buff_pop.buf, sHandSPI.buff_pop.len) > 0)
+		{
+			CNOP;
+		}
+	}  
+}
+
+CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
+{
+    if (largeBuf->head + len >= BUFF_MAX_LARGE)
+    {
+        return CFALSE;
+    }
+
+    largeBuf->buf[largeBuf->head++] = len & 0xFF;
+    largeBuf->buf[largeBuf->head++] = (len >> 8) & 0xFF;
+
+    memcpy(&largeBuf->buf[largeBuf->head], buf, len);
+
+    largeBuf->head += len;
+
+    if (largeBuf->max < len)
+    {
+        largeBuf->max = len;
+    }
+
+    return CTRUE;
+}
+
+uint16_t Buff_subArraySmall(Buff_Small_TypeDef *smallBuf, uint8_t *buf)
+{
+    uint16_t pop_len = 0;
+
+    isEQUA_RET_USER(smallBuf->head, smallBuf->tail, 0);
+
+    pop_len = smallBuf->buf[smallBuf->tail] | (smallBuf->buf[smallBuf->tail + 1] << 8);
+
+    memcpy(buf, &smallBuf->buf[smallBuf->tail + 2], pop_len);
+
+    smallBuf->tail += (pop_len + 2);
+
+    if (smallBuf->head == smallBuf->tail)
+    {
+        smallBuf->head = smallBuf->tail = 0;
+    }
+
+    return pop_len;
+}
+
+uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *buf)
+{
+    uint16_t pop_len = 0;
+
+    isEQUA_RET_USER(largeBuf->head, largeBuf->tail, 0);
+
+    pop_len = largeBuf->buf[largeBuf->tail] | (largeBuf->buf[largeBuf->tail + 1] << 8);
+
+    memcpy(buf, &largeBuf->buf[largeBuf->tail + 2], pop_len);
+    buf[pop_len] = 0x00;
+
+    largeBuf->tail += (pop_len + 2);
+
+    if (largeBuf->head == largeBuf->tail)
+    {
+        largeBuf->head = largeBuf->tail = 0;
+    }
+
+    return pop_len;
+}
+
+void SPI_Callback_spiRxComplete(void)
+{
+    sHandSPI.buffSmall_rx.len = SPI_RX_LEN - SPI_RX_CNT;
+
+    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_RXNE) != RESET)
+    {
+        Buff_appendLarge(&sHandSPI.buffLarge_rx, sHandSPI.buffSmall_rx.buf, sHandSPI.buffSmall_rx.len);
+    }
+
+    HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+}
+
+void SPI_Callback_spiError(void)
+{
+    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_TXE) == RESET && __HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_BSY) == RESET)
+    {
+        if (USRM_getHandle()->tst.enable) INC_UINT32(USRM_getHandle()->tst.extc_uart_error);
+    }
+
+    HAL_SPI_Abort(SPI_HANDLE);
+    HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+}
+
+void SPI_init(void)
+{
+	HAL_SPI_Abort(SPI_HANDLE);
+	HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+	__HAL_SPI_ENABLE_IT(SPI_HANDLE, SPI_IT_RXNE);
+	HAL_Delay(5);
+}
