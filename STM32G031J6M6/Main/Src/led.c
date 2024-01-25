@@ -238,18 +238,6 @@ void LED_setColor(uint8_t pixelNum, uint8_t red, uint8_t green, uint8_t blue, ui
 	hled.buf[pixelNum * 3 + 2] = blue;
 }
 
-void PROC_LED(void)
-{
-	if (hled.head != hled.tail)
-	{
-		while(getDataSendFlag());
-		//HAL_TIM_PWM_Start_DMA(&htim17, TIM_CHANNEL_1, led.ringBuf, DMA_BUFF_SIZE);
-		dataSendFlag(1);
-		hled.tail += DMA_BUFF_SIZE;
-	}
-}
-
-
 /* @brief led show segment
  * @note 
  * @param ch a ascii textIdx

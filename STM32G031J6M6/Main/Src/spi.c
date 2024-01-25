@@ -1,5 +1,6 @@
 #include "../Inc/spi.h"
 #include <main.h>
+#include <string.h>
 //static SPI_HANDLE_TYPEDEF_STRUCT sHandleSPI;
 /*
 Dec  Char                           Dec  Char     Dec  Char     Dec  Char
@@ -45,23 +46,17 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 #define EOT 4
 #define ACK 5
 
-#define SPI_HANDLE          &spi1 
+#define SPI_HANDLE          &hspi1 
 #define SPI_IRQn            SPI1_IRQn
 #define SPI_RX_CNT          (SPI_HANDLE)->RxXferCount
 #define SPI_RX_LEN          BUFF_MAX_SMALL
 
 SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
+extern SPI_HandleTypeDef hspi1;
+
 void SPI_PROC(uint32_t delay)
 {
-    sHandSPI.buffSmall_rx.len = Ring_subArrayLarge(&sHandSPI.ring_rx, sHandSPI.buff_pop.buf);
-
-	if (sHandSPI.buff_pop.len != 0)
-	{
-		if (sHandSPI != NULL && EXTC_Classification(sHandSPI.buff_pop.buf, sHandSPI.buff_pop.len) > 0)
-		{
-			CNOP;
-		}
-	}  
+    sHandSPI.buffSmall_rx.len = Buff_subArrayLarge(&sHandSPI.buffLarge_rx, sHandSPI.buffSmall_rx.buf);
 }
 
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
@@ -143,7 +138,6 @@ void SPI_Callback_spiError(void)
 {
     if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_TXE) == RESET && __HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_BSY) == RESET)
     {
-        if (USRM_getHandle()->tst.enable) INC_UINT32(USRM_getHandle()->tst.extc_uart_error);
     }
 
     HAL_SPI_Abort(SPI_HANDLE);

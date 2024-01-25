@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include "main.h"
-
+#include "../Inc/support.h"
 #define BUFF_MAX_SMALL                      256
 #define BUFF_MAX_LARGE                      1024
 
