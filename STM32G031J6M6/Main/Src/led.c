@@ -478,7 +478,6 @@ void LED_allOff(void)
 
 void LED_setBrightDX(float val)
 {
-	isEQUA_RET_USER(hled, NULL, CFALSE);
 	hled.bright_dx = val;
 }
 
