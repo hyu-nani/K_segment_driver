@@ -106,7 +106,7 @@ void SPI_Callback_spiRxComplete(void)
 {
     sHandSPI.buffSmall_rx.len = SPI_RX_LEN - SPI_RX_CNT;
 
-    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_RXNE) != RESET)
+    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_RXNE) != SET)
     {
         Buff_appendLarge(&sHandSPI.buffLarge_rx, sHandSPI.buffSmall_rx.buf, sHandSPI.buffSmall_rx.len);
     }
