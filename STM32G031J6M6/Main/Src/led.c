@@ -380,9 +380,9 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
 			{
 				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
-				LED_setColor(j, (uint8_t)((float)red_now[j] * led_segment_mask_r[i]), 
-								(uint8_t)((float)green_now[j] * led_segment_mask_g[i]), 
-								(uint8_t)((float)blue_now[j] * led_segment_mask_b[i]), 
+				LED_setColor(j, (uint8_t)((float)hled.red_now[j] * led_segment_mask_r[i]), 
+								(uint8_t)((float)hled.green_now[j] * led_segment_mask_g[i]), 
+								(uint8_t)((float)hled.blue_now[j] * led_segment_mask_b[i]), 
 								led_bright);
 				i++;
 			}
@@ -521,9 +521,9 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
 			{
 				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
-				LED_setColor(j, (uint8_t)((float)red_now[j] * led_segment_mask_r[i]), 
-								(uint8_t)((float)green_now[j] * led_segment_mask_g[i]), 
-								(uint8_t)((float)blue_now[j] * led_segment_mask_b[i]), 
+				LED_setColor(j, (uint8_t)((float)hled.red_now[j] * led_segment_mask_r[i]), 
+								(uint8_t)((float)hled.green_now[j] * led_segment_mask_g[i]), 
+								(uint8_t)((float)hled.blue_now[j] * led_segment_mask_b[i]), 
 								led_bright);
 				i++;
 			}
