@@ -18,33 +18,33 @@ float delay = 50;
 void mainTask()
 {
     htime.indicate_tick = HAL_GetTick();
-    while (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET)
+    if (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_SET)
     {
-        HAL_SPI_Receive_IT(&hspi1, uHandle.rxData, sizeof(uint8_t)*num_protocol);
+        htime.second++;
+        if (htime.second >= 60)
+        {
+            htime.second = 0;
+            htime.minute++;
+        }
+        if (htime.minute >= 60)
+        {
+            htime.minute = 0;
+            htime.hour++;
+        }
+        if (htime.hour >= 24)
+        {
+            htime.hour = 0;
+            htime.second = 0;
+            htime.minute = 0;
+        }
+
+        sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
+
+        LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+        HAL_Delay(htime.indicate_interval + htime.indicate_tick - HAL_GetTick());
     }
 
-    htime.second++;
-    if (htime.second >= 60)
-    {
-        htime.second = 0;
-        htime.minute++;
-    }
-    if (htime.minute >= 60)
-    {
-        htime.minute = 0;
-        htime.hour++;
-    }
-    if (htime.hour >= 24)
-    {
-        htime.hour = 0;
-        htime.second = 0;
-        htime.minute = 0;
-    }
-
-    sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
-
-    LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
-    HAL_Delay(htime.indicate_interval + htime.indicate_tick - HAL_GetTick());
+    
 
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();

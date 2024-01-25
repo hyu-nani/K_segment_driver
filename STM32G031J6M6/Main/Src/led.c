@@ -175,6 +175,9 @@ static float led_segment_mask_b[] = {
 	0.9, 0.9, 1.0, 0.75, 0.75, 1.0, 0.9, 0.9,
 };
 
+/** @brief led data send to DMA
+ * 
+ */
 void LED_show(void)
 {
 	while(getDataSendFlag());
@@ -225,6 +228,14 @@ void LED_show(void)
 	}
 }
 
+/** @brief led color data stack to buf
+ * 
+ *  @param pixelNum set pixel num
+ *  @param red red val 0-255
+ *  @param green green val 0-255
+ *  @param blue blue val 0-255
+ *  @param bright led total bright 0-100
+ */
 void LED_setColor(uint8_t pixelNum, uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
 {
 	if (bright > 100)
@@ -238,14 +249,14 @@ void LED_setColor(uint8_t pixelNum, uint8_t red, uint8_t green, uint8_t blue, ui
 	hled.buf[pixelNum * 3 + 2] = blue;
 }
 
-/* @brief led show segment
- * @note 
- * @param ch a ascii textIdx
- * @param num number unit of segment
- * @param led_R 0 - 255
- * @param led_G 0 - 255
- * @param led_B 0 - 255
- * @param led_bright 0 - 100 [%]
+/** @brief led show segment
+ * 
+ *  @param ch a ascii textIdx
+ *  @param num number unit of segment
+ *  @param led_R 0 - 255
+ *  @param led_G 0 - 255
+ *  @param led_B 0 - 255
+ *  @param led_bright 0 - 100 [%]
  */
 void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright)
 {
@@ -379,7 +390,8 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 	}
 }
 
-/* @brief led show segment(invert)
+/** 
+ * @brief led show segment(invert)
  * @note 
  * @param ch a ascii textIdx
  * @param num number unit of segment
@@ -520,6 +532,10 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 	}
 }
 
+/**
+ * @brief led All off
+ * 
+ */
 void LED_allOff(void)
 {
 	for (int i = 0; i < ALL_LED+1; i++)
@@ -530,6 +546,11 @@ void LED_allOff(void)
 	HAL_Delay(1);
 }
 
+/**
+ * @brief led 변화량 
+ * 
+ * @param val 변화단계수
+ */
 void LED_setDX(float val)
 {
 	hled.dx = val;
