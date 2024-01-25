@@ -44,8 +44,6 @@ void mainTask()
         HAL_Delay(htime.indicate_interval + htime.indicate_tick - HAL_GetTick());
     }
 
-    
-
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();
     uHandle.runTime = uHandle.taskTick_p;
@@ -101,20 +99,14 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-    if (hspi->Instance == SPI1)
-    {
-        SPI_Callback_spiRxComplete();
-        uHandle.rx_data_flag = CTRUE;
-        uHandle.tx_led_flag = CFALSE;
-    }
+    SPI_Callback_spiRxComplete();
+    uHandle.rx_data_flag = CTRUE;
+    uHandle.tx_led_flag = CFALSE;
 }
 
 void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi)
 {
-    if (hspi->Instance == SPI1)
-    {
-        SPI_Callback_spiError();
-    }
+    SPI_Callback_spiError();
 }
 
 void dataSendFlag(uint8_t flag)
