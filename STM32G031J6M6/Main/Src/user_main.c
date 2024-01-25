@@ -93,6 +93,7 @@ void initTask(void)
     hledUSRM.bright = 30;//30
     htime.hour = 12;
     htime.minute = 30;
+    LED_setBrightDX(0.8);
     HAL_Delay(100);
 }
 

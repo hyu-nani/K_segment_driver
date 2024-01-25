@@ -1,4 +1,5 @@
 #include "../Inc/led.h"
+#include "../Inc/support.h"
 
 extern TIM_HandleTypeDef htim17;
 DATA_HANDLE_TYPEDEF_STRUCT hled;
@@ -475,9 +476,10 @@ void LED_allOff(void)
 	HAL_Delay(1);
 }
 
-void LED_setBrightDX(float data)
+void LED_setBrightDX(float val)
 {
-	
+	isEQUA_RET_USER(hled, NULL, CFALSE);
+	hled.bright_dx = val;
 }
 
 void LED_rainbow(void)

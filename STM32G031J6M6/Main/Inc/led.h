@@ -70,6 +70,7 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);
+void LED_setBrightDX(float val);
 void LED_rainbow(void);
 
 #ifdef __cplusplus
