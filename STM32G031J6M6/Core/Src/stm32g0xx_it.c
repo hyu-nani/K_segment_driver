@@ -189,9 +189,10 @@ void TIM17_IRQHandler(void)
 void SPI1_IRQHandler(void)
 {
   /* USER CODE BEGIN SPI1_IRQn 0 */
-  if (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) != SET)
+  if (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) != RESET)
   {
     SPI_Callback_spiRxComplete();
+
   }
   else
   /* USER CODE END SPI1_IRQn 0 */
