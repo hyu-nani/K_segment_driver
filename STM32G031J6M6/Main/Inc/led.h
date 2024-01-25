@@ -42,7 +42,7 @@ typedef struct
     uint8_t     idx_list[NUM_UNIT];
     uint32_t    dma_buf[DMA_BUFF_SIZE];
 
-    uint8_t     Buf[RING_BUF_SIZE];
+    uint8_t     buf[RING_BUF_SIZE];
     uint8_t     bright_now[ALL_UNIT];
     uint8_t     bright_dest[ALL_UNIT];
     uint8_t     bright_orig[ALL_UNIT];

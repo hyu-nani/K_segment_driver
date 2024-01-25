@@ -6,7 +6,7 @@
 #include "../Inc/tim.h"
 
 USER_HANDLE_TYPEDEF_STRUCT uHandle;
-LED_HANDLE_TYPEDEF_STRUCT hled;
+LED_HANDLE_TYPEDEF_STRUCT hledUSRM;
 TIME_HANDLE_TYPEDEF_STRUCT htime;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim17;
@@ -20,8 +20,8 @@ CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PI
 void mainTask()
 {
     
-    sprintf(htime.arr, "%2d:%2d", htime.minute, htime.second);
-    LED_showSegment_invert(htime.arr, 1, hled.color_r, hled.color_g, hled.color_b, hled.bright);
+    sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
+    LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
     HAL_Delay(1000);
 
     htime.second++;
@@ -87,10 +87,10 @@ void initTask(void)
     //srand((unsigned) time(&t)); //이거 있으면 디버거 없이 부팅안됨.
 
     LED_allOff();
-    hled.color_r = 200;//200
-    hled.color_g = 120;//120
-    hled.color_b = 30;//30
-    hled.bright = 30;//30
+    hledUSRM.color_r = 200;//200
+    hledUSRM.color_g = 120;//120
+    hledUSRM.color_b = 30;//30
+    hledUSRM.bright = 30;//30
     htime.hour = 12;
     htime.minute = 30;
     HAL_Delay(100);
@@ -108,7 +108,7 @@ void set_module(void)
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
 {
     HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
-    hled.dataSendFlag = 0;
+    hledUSRM.dataSendFlag = 0;
 }
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
@@ -121,10 +121,10 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 
 void dataSendFlag(uint8_t flag)
 {
-    hled.dataSendFlag = flag;
+    hledUSRM.dataSendFlag = flag;
 }
 
 uint8_t getDataSendFlag(void)
 {
-    return hled.dataSendFlag;
+    return hledUSRM.dataSendFlag;
 }

@@ -177,7 +177,7 @@ static float led_segment_mask_b[] = {
 void LED_show(void)
 {
 	while(getDataSendFlag());
-	HAL_TIM_PWM_Start_DMA(&htim17, TIM_CHANNEL_1, led.dma_buf, DMA_BUFF_SIZE);
+	HAL_TIM_PWM_Start_DMA(&htim17, TIM_CHANNEL_1, hled.dma_buf, DMA_BUFF_SIZE);
 	dataSendFlag(1);
 	for (uint16_t pixelNum = 0 ; pixelNum < (NUM_PIXELS_PER_UNIT * NUM_UNIT * 3); pixelNum += 3)
 	{
@@ -232,9 +232,9 @@ void LED_setColor(uint8_t pixelNum, uint8_t red, uint8_t green, uint8_t blue, ui
 	green = (uint8_t)((float)green * MAX_BRIGHT / 255.0f * (float)bright / 100.0f);
 	blue = (uint8_t)((float)blue * MAX_BRIGHT / 255.0f * (float)bright / 100.0f);
 	
-	hled.Buf[pixelNum * 3 + 0] = red;
-	hled.Buf[pixelNum * 3 + 1] = green;
-	hled.Buf[pixelNum * 3 + 2] = blue;
+	hled.buf[pixelNum * 3 + 0] = red;
+	hled.buf[pixelNum * 3 + 1] = green;
+	hled.buf[pixelNum * 3 + 2] = blue;
 }
 
 void PROC_LED(void)
