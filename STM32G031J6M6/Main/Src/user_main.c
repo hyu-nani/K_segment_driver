@@ -13,16 +13,33 @@ extern TIM_HandleTypeDef htim17;
 
 uint8_t inv = 0;
 float delay = 50;
-
-CBOOL CS_EN()  {return HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET ? CTRUE : CFALSE;}
-#define segment_num 1
+#define CS_EN()   if (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET) { return true; } else { return false; }
+#define num_protocol 1
 
 void mainTask()
 {
-    
-    sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
-    LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
-    HAL_Delay(1000);
+    while (CS_EN())
+    {
+        uHandle.rx_data_flag = CFALSE;
+    }
+    if (uHandle.rx_data_flag == CFALSE)
+    {
+        HAL_SPI_Receive_IT(&hspi1, uHandle.rxData, sizeof(uint8_t)*num_protocol);
+    }
+    else
+    {
+        if (uHandle.tx_led_flag == CFALSE)
+        {
+            uHandle.tx_led_flag = CTRUE;
+            //show_segment(uHandle.rxData, segment_num);
+        }
+        else
+        {
+            HAL_Delay(1);
+        }
+    }
+
+    htime.indicate_tick = osKernelSysTick();
 
     htime.second++;
     if (htime.second >= 60)
@@ -38,28 +55,15 @@ void mainTask()
     if (htime.hour >= 24)
     {
         htime.hour = 0;
+        htime.second = 0;
+        htime.minute = 0;
     }
-    //LED_rainbow();
-    if (CS_EN() == CTRUE)
-    {
-        uHandle.rx_data_flag = CFALSE;
-    }
-    if (uHandle.rx_data_flag == CFALSE)
-    {
-        HAL_SPI_Receive_IT(&hspi1, uHandle.rxData, sizeof(uint8_t)*segment_num);
-    }
-    else
-    {
-        if (uHandle.tx_led_flag == CFALSE)
-        {
-            uHandle.tx_led_flag = CTRUE;
-            //show_segment(uHandle.rxData, segment_num);
-        }
-        else
-        {
-            HAL_Delay(1);
-        }
-    }
+
+    sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
+
+    LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+    HAL_Delay(1000 + htime.indicate_tick - osKernelSysTick);
+
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();
     uHandle.runTime = uHandle.taskTick_p;

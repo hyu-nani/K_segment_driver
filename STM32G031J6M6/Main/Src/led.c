@@ -269,7 +269,7 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 	int textIdx;
 	uint16_t side;
 	uint32_t cent;
-	int i;
+	int i, j;
 	for (int num = 0; num < NUM_UNIT; num++)
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
@@ -291,11 +291,15 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 			{
 				if (cent & 0x80000000)
 				{	
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
 				}
 				else
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
 				}
 				cent = (cent << 1);
 			}
@@ -303,35 +307,65 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 			{
 				if (side & 0x8000)
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
 				}
 				else
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
 				}
 				side = (side << 1);
 			}
 		}
 	}
-	for (i = 0; i < ALL_UNIT; i++)
+	for (i = 0; i < ALL_LED; i++)
 	{
-		hled.bright_orig[i] = hled.bright_now[i];
+		hled.red_orig[i] = hled.red_now[i];
+		hled.green_orig[i] = hled.green_now[i];
+		hled.blue_orig[i] = hled.blue_now[i];
 	}
 	while (1)
 	{
 		hled.compare = CTRUE;
-		for (i = 0; i < ALL_UNIT; i++)
+		for (i = 0; i < ALL_LED; i++)
 		{
-			if (abs(hled.bright_dest[i] - hled.bright_now[i]) > 2)
+			if (abs(hled.red_dest[i] - hled.red_now[i]) > 2)
 			{
 				hled.compare = CFALSE;
-				if (hled.bright_dest[i] < hled.bright_now[i])
+				if (hled.red_dest[i] < hled.bright_now[i])
 				{
-					hled.bright_now[i] -= (uint8_t)(fabs(hled.bright_dest[i] - hled.bright_orig[i]) * (1.0f - hled.bright_dx));
+					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
 				}
-				if (hled.bright_dest[i] > hled.bright_now[i])
+				else
 				{
-					hled.bright_now[i] += (uint8_t)(fabs(hled.bright_dest[i] - hled.bright_orig[i]) * (1.0f - hled.bright_dx));
+					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+				}
+			}
+			if (abs(hled.green_dest[i] - hled.green_now[i]) > 2)
+			{
+				hled.compare = CFALSE;
+				if (hled.green_dest[i] < hled.green_now[i])
+				{
+					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+				}
+				else
+				{
+					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+				}
+			}
+			if (abs(hled.blue_dest[i] - hled.blue_now[i]) > 2)
+			{
+				hled.compare = CFALSE;
+				if (hled.blue_dest[i] < hled.blue_now[i])
+				{
+					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+				}
+				else
+				{
+					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
 				}
 			}
 		}
@@ -341,16 +375,15 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 		}
 		for (int num = 0 ; num < NUM_UNIT; num++)
 		{
-			side = led_side[hled.idx_list[num]];
-			cent = led_segment[hled.idx_list[num]];
 			i = 0;
+			
 			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
 			{
-				LED_setColor((pixelNum + num * NUM_PIXELS_PER_UNIT), 
-									(uint8_t)((float)hled.r * led_segment_mask_r[i]), 
-									(uint8_t)((float)hled.g * led_segment_mask_g[i]), 
-									(uint8_t)((float)hled.b * led_segment_mask_b[i]), 
-									(uint8_t)hled.bright_now[pixelNum + num * NUM_PIXELS_PER_UNIT]);
+				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
+				LED_setColor(j, (uint8_t)((float)red_now[j] * led_segment_mask_r[i]), 
+								(uint8_t)((float)green_now[j] * led_segment_mask_g[i]), 
+								(uint8_t)((float)blue_now[j] * led_segment_mask_b[i]), 
+								led_bright);
 				i++;
 			}
 		}
@@ -377,7 +410,7 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 	int textIdx;
 	uint16_t side;
 	uint32_t cent;
-	int i;
+	int i, j;
 	for (int num = 0; num < NUM_UNIT; num++)
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
@@ -399,11 +432,15 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 			{
 				if (cent & 0x80000000)
 				{	
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
 				}
 				else
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
 				}
 				cent = (cent << 1);
 			}
@@ -411,35 +448,65 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 			{
 				if (side & 0x8000)
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
 				}
 				else
 				{
-					hled.bright_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_bright;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
 				}
 				side = (side << 1);
 			}
 		}
 	}
-	for (i = 0; i < ALL_UNIT; i++)
+	for (i = 0; i < ALL_LED; i++)
 	{
-		hled.bright_orig[i] = hled.bright_now[i];
+		hled.red_orig[i] = hled.red_now[i];
+		hled.green_orig[i] = hled.green_now[i];
+		hled.blue_orig[i] = hled.blue_now[i];
 	}
 	while (1)
 	{
 		hled.compare = CTRUE;
-		for (i = 0; i < ALL_UNIT; i++)
+		for (i = 0; i < ALL_LED; i++)
 		{
-			if (abs(hled.bright_dest[i] - hled.bright_now[i]) > 2)
+			if (abs(hled.red_dest[i] - hled.red_now[i]) > 2)
 			{
 				hled.compare = CFALSE;
-				if (hled.bright_dest[i] < hled.bright_now[i])
+				if (hled.red_dest[i] < hled.bright_now[i])
 				{
-					hled.bright_now[i] -= (uint8_t)(fabs(hled.bright_dest[i] - hled.bright_orig[i]) * (1.0f - hled.bright_dx));
+					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
 				}
-				if (hled.bright_dest[i] > hled.bright_now[i])
+				else
 				{
-					hled.bright_now[i] += (uint8_t)(fabs(hled.bright_dest[i] - hled.bright_orig[i]) * (1.0f - hled.bright_dx));
+					hled.red_now[i] += (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
+				}
+			}
+			if (abs(hled.green_dest[i] - hled.green_now[i]) > 2)
+			{
+				hled.compare = CFALSE;
+				if (hled.green_dest[i] < hled.green_now[i])
+				{
+					hled.green_now[i] -= (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+				}
+				else
+				{
+					hled.green_now[i] += (uint8_t)(fabs(hled.green_dest[i] - hled.green_orig[i]) * (1.0f - hled.dx));
+				}
+			}
+			if (abs(hled.blue_dest[i] - hled.blue_now[i]) > 2)
+			{
+				hled.compare = CFALSE;
+				if (hled.blue_dest[i] < hled.blue_now[i])
+				{
+					hled.blue_now[i] -= (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
+				}
+				else
+				{
+					hled.blue_now[i] += (uint8_t)(fabs(hled.blue_dest[i] - hled.blue_orig[i]) * (1.0f - hled.dx));
 				}
 			}
 		}
@@ -449,16 +516,15 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 		}
 		for (int num = 0 ; num < NUM_UNIT; num++)
 		{
-			side = led_side[hled.idx_list[num]];
-			cent = led_segment[hled.idx_list[num]];
 			i = 0;
+			
 			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
 			{
-				LED_setColor((pixelNum + num * NUM_PIXELS_PER_UNIT), 
-									(uint8_t)((float)hled.r * led_segment_mask_r[i]), 
-									(uint8_t)((float)hled.g * led_segment_mask_g[i]), 
-									(uint8_t)((float)hled.b * led_segment_mask_b[i]), 
-									(uint8_t)hled.bright_now[pixelNum + num * NUM_PIXELS_PER_UNIT]);
+				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
+				LED_setColor(j, (uint8_t)((float)red_now[j] * led_segment_mask_r[i]), 
+								(uint8_t)((float)green_now[j] * led_segment_mask_g[i]), 
+								(uint8_t)((float)blue_now[j] * led_segment_mask_b[i]), 
+								led_bright);
 				i++;
 			}
 		}
@@ -468,17 +534,17 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 
 void LED_allOff(void)
 {
-	for (int i = 0; i < (NUM_UNIT * NUM_PIXELS_PER_UNIT)+1; i++)
+	for (int i = 0; i < ALL_LED+1; i++)
 	{
 		LED_setColor(i, 0, 0, 0, 0);
 	}
-        LED_show();
+    LED_show();
 	HAL_Delay(1);
 }
 
-void LED_setBrightDX(float val)
+void LED_setDX(float val)
 {
-	hled.bright_dx = val;
+	hled.dx = val;
 }
 
 void LED_rainbow(void)

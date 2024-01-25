@@ -36,7 +36,7 @@ typedef struct {
     uint8_t hour;
     uint8_t minute;
     uint8_t second;
-    
+    uint32_t indicate_tick;
     uint8_t arr[5];
 } TIME_HANDLE_TYPEDEF_STRUCT;
 

@@ -13,7 +13,7 @@ extern "C" {
 #define MAX_BRIGHT              180.0f
 #define MIN_BRIGHT              4
 #define MAX_IDX                 50
-#define ALL_UNIT                NUM_PIXELS_PER_UNIT*NUM_UNIT
+#define ALL_LED                 NUM_PIXELS_PER_UNIT*NUM_UNIT
   
 /* LED MODULE */
 #define WS2812
@@ -30,7 +30,7 @@ extern "C" {
 #define DMA_BUFF_SIZE           32 + 1
 #endif
 
-#define RING_BUF_SIZE           ALL_UNIT * 3
+#define RING_BUF_SIZE           ALL_LED * 3
 
 /* private define ------------------------------------ */
 typedef struct 
@@ -43,11 +43,19 @@ typedef struct
     uint32_t    dma_buf[DMA_BUFF_SIZE];
 
     uint8_t     buf[RING_BUF_SIZE];
-    uint8_t     bright_now[ALL_UNIT];
-    uint8_t     bright_dest[ALL_UNIT];
-    uint8_t     bright_orig[ALL_UNIT];
+    uint8_t     red_now[ALL_LED];
+    uint8_t     green_now[ALL_LED];
+    uint8_t     blue_now[ALL_LED];
+
+    uint8_t     red_dest[ALL_LED];
+    uint8_t     red_orig[ALL_LED];
+    uint8_t     green_dest[ALL_LED];
+    uint8_t     green_orig[ALL_LED];
+    uint8_t     blue_dest[ALL_LED];
+    uint8_t     blue_orig[ALL_LED];
+
     CBOOL       compare;
-    float       bright_dx;
+    float       dx;
     uint16_t    head;
     uint16_t    tail;
 } DATA_HANDLE_TYPEDEF_STRUCT;
@@ -70,7 +78,7 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);
-void LED_setBrightDX(float val);
+void LED_setDX(float val);
 void LED_rainbow(void);
 
 #ifdef __cplusplus
