@@ -335,7 +335,7 @@ void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uin
 			if (abs(hled.red_dest[i] - hled.red_now[i]) > 2)
 			{
 				hled.compare = CFALSE;
-				if (hled.red_dest[i] < hled.bright_now[i])
+				if (hled.red_dest[i] < hled.red_now[i])
 				{
 					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
 				}
@@ -476,7 +476,7 @@ void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led
 			if (abs(hled.red_dest[i] - hled.red_now[i]) > 2)
 			{
 				hled.compare = CFALSE;
-				if (hled.red_dest[i] < hled.bright_now[i])
+				if (hled.red_dest[i] < hled.red_now[i])
 				{
 					hled.red_now[i] -= (uint8_t)(fabs(hled.red_dest[i] - hled.red_orig[i]) * (1.0f - hled.dx));
 				}

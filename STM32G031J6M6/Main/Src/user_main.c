@@ -13,12 +13,11 @@ extern TIM_HandleTypeDef htim17;
 
 uint8_t inv = 0;
 float delay = 50;
-#define CS_EN()   if (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET) { return true; } else { return false; }
 #define num_protocol 1
 
 void mainTask()
 {
-    while (CS_EN())
+    while (HAL_GPIO_ReadPin(SPI1_CS_GPIO_Port, SPI1_CS_Pin)==GPIO_PIN_RESET)
     {
         uHandle.rx_data_flag = CFALSE;
     }
@@ -39,7 +38,7 @@ void mainTask()
         }
     }
 
-    htime.indicate_tick = osKernelSysTick();
+    htime.indicate_tick = HAL_GetTick();
 
     htime.second++;
     if (htime.second >= 60)
@@ -62,7 +61,7 @@ void mainTask()
     sprintf((char*)htime.arr, "%2d:%2d", htime.minute, htime.second);
 
     LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
-    HAL_Delay(1000 + htime.indicate_tick - osKernelSysTick);
+    HAL_Delay(1000 + htime.indicate_tick - HAL_GetTick());
 
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();
@@ -97,7 +96,7 @@ void initTask(void)
     hledUSRM.bright = 30;//30
     htime.hour = 12;
     htime.minute = 30;
-    LED_setBrightDX(0.8);
+    LED_setDX(0.8);
     HAL_Delay(100);
 }
 
