@@ -18,10 +18,31 @@ float delay = 50;
 void mainTask()
 {
     htime.nowTick = HAL_GetTick();
-    SPI_PROC(10);
-    
-    LED_showSegment_invert(htime.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+    if (SPI_PROC() == CTRUE)
+    {
+        uHandle.mode = SPI_getMode();
+        uHandle.arr = SPI_getData();
+        switch(uHandle.mode)
+        {
+            case MODE_OFF:
+                LED_allOff();
+                break;
+            case MODE_PRINT:
+                LED_showSegment(uHandle.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                break;
+            case MODE_PRINT_INV:
+                LED_showSegment_invert(uHandle.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                break;
+            case MODE_EFFECT:
+                break;
+            default:
+                break;
+        }
     }
+
+    
+    
+    
 
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();

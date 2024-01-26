@@ -54,20 +54,27 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
 extern SPI_HandleTypeDef hspi1;
 
-void SPI_PROC(uint32_t delay)
+CBOOL SPI_PROC(void)
 {
+
     sHandSPI.pop_rx.len = Buff_subArrayLarge(&sHandSPI.buffLarge_rx, sHandSPI.pop_rx.buf);
 
     if (sHandSPI.pop_rx.len != 0)
     {
-        sHandSPI.address = sHandSPI.pop_rx.buf[0];
-        sHandSPI.mode = sHandSPI.pop_rx.buf[1];
-        sHandSPI.data[0] = sHandSPI.pop_rx.buf[2];
-        sHandSPI.data[1] = sHandSPI.pop_rx.buf[3];
-        sHandSPI.data[2] = sHandSPI.pop_rx.buf[4];
-        sHandSPI.data[3] = sHandSPI.pop_rx.buf[5];
-        sHandSPI.data[4] = sHandSPI.pop_rx.buf[6];
+        sHandSPI.mode = sHandSPI.pop_rx.buf[0];
+        memcpy(sHandSPI.data, sHandSPI.pop_rx.buf[1], 5);
+        return CTRUE;
     }
+    return CFALSE;
+}
+uint8_t SPI_getMode(void)
+{
+    return sHandSPI.mode;
+}
+
+uint8_t SPI_getData(void)
+{
+    return sHandSPI.data;
 }
 
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)

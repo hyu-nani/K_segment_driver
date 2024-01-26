@@ -8,6 +8,14 @@ extern "C" {
 #include "../Inc/support.h"
 #include "main.h"
 
+typedef enum
+{
+    MODE_OFF = 0x00,
+    MODE_PRINT,
+    MODE_PRINT_INV,
+    MODE_EFFECT,
+} USRM_Mode_TypeDef;
+
 typedef struct 
 {
     uint32_t runTime;
@@ -15,10 +23,10 @@ typedef struct
     uint32_t taskTick_p;
     uint32_t taskTick;
 
-    uint8_t* rxData;
+    uint8_t* arr;
     CBOOL rx_data_flag;
     CBOOL tx_led_flag;
-
+    USRM_Mode_TypeDef mode;
     LED_moduleList nowModule;
 } USER_HANDLE_TYPEDEF_STRUCT;
 

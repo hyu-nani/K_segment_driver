@@ -33,10 +33,12 @@ typedef struct
     Buff_Small_TypeDef pop_rx;
     uint8_t address;
     uint8_t mode;
-    uint8_t data[5];
+    uint8_t *data;
 } SPI_HANDLE_TYPEDEF_STRUCT;
 
-void SPI_PROC(uint32_t delay);
+CBOOL SPI_PROC(void);
+uint8_t SPI_getMode(void);
+uint8_t SPI_getData(void);
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *smallBuf, uint16_t len);
 uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *smallBuf);
 void SPI_init(void);
