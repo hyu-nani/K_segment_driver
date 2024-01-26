@@ -14,6 +14,8 @@ typedef enum
     MODE_PRINT,
     MODE_PRINT_INV,
     MODE_EFFECT,
+    SET_DX,
+    SET_COLOR,
 } USRM_Mode_TypeDef;
 
 typedef struct 

@@ -28,10 +28,10 @@ void mainTask()
                 LED_allOff();
                 break;
             case MODE_PRINT:
-                LED_showSegment(uHandle.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                LED_showSegment(uHandle.arr, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
                 break;
             case MODE_PRINT_INV:
-                LED_showSegment_invert(uHandle.arr, 1, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                LED_showSegment_invert(uHandle.arr, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
                 break;
             case MODE_EFFECT:
                 break;
@@ -74,12 +74,12 @@ void initTask(void)
     hledUSRM.color_r = 200;
     hledUSRM.color_g = 120;
     hledUSRM.color_b = 30;
-    hledUSRM.bright = 30;
+    hledUSRM.bright = 100;
     htime.hour = 12;
-    htime.minute = 30;
+    htime.minute = 20;
     htime.indicate_interval = 1000;
     SPI_init();
-    LED_setDX(10);
+    LED_setDX(30);
 }
 
 void set_module(void)

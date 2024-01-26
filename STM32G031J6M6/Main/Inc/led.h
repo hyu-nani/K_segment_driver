@@ -32,30 +32,31 @@ extern "C" {
 
 #define RING_BUF_SIZE           ALL_LED * 3
 
+#define MUL_VAL                 100
 /* private define ------------------------------------ */
 typedef struct 
 {
     uint16_t    idx;/* data */
-    uint8_t     r;
-    uint8_t     g;
-    uint8_t     b;
+    int16_t     r;
+    int16_t     g;
+    int16_t     b;
     uint8_t     idx_list[NUM_UNIT];     
     uint32_t    dma_buf[DMA_BUFF_SIZE]; //chort buf 
 
     uint8_t     buf[RING_BUF_SIZE];     //all buf
-    uint8_t     red_now[ALL_LED];       //current
-    uint8_t     green_now[ALL_LED];     //current
-    uint8_t     blue_now[ALL_LED];      //current
+    int16_t     red_now[ALL_LED];       //current
+    int16_t     green_now[ALL_LED];     //current
+    int16_t     blue_now[ALL_LED];      //current
 
-    uint8_t     red_dest[ALL_LED];      //red destination 
-    uint8_t     red_orig[ALL_LED];      //red origin 
-    uint8_t     green_dest[ALL_LED];    //green destination
-    uint8_t     green_orig[ALL_LED];    //green origin
-    uint8_t     blue_dest[ALL_LED];     //blue destination
-    uint8_t     blue_orig[ALL_LED];     //blue origin
+    int16_t     red_dest[ALL_LED];      //red destination 
+    int16_t     red_orig[ALL_LED];      //red origin 
+    int16_t     green_dest[ALL_LED];    //green destination
+    int16_t     green_orig[ALL_LED];    //green origin
+    int16_t     blue_dest[ALL_LED];     //blue destination
+    int16_t     blue_orig[ALL_LED];     //blue origin
 
     CBOOL       compare;           
-    float       dx;
+    int8_t      dx;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
 
@@ -70,8 +71,8 @@ static float    led_segment_mask_b[NUM_PIXELS_PER_UNIT];
 
 void append_buf(void);
 void LED_show(void);
-void LED_showSegment(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
-void LED_showSegment_invert(uint8_t* ch, uint8_t num, uint8_t led_R, uint8_t led_G, uint8_t led_B, uint8_t led_bright);
+void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright);
+void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright);
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);

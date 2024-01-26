@@ -89,7 +89,6 @@ CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_
     }
 
     largeBuf->buf[largeBuf->head++] = len & 0xFF;
-    largeBuf->buf[largeBuf->head++] = (len >> 8) & 0xFF;
 
     memcpy(&largeBuf->buf[largeBuf->head], buf, len);
 
@@ -109,12 +108,11 @@ uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *buf)
 
     isEQUA_RET_USER(largeBuf->head, largeBuf->tail, 0);
 
-    pop_len = largeBuf->buf[largeBuf->tail] | (largeBuf->buf[largeBuf->tail + 1] << 8);
+    pop_len = largeBuf->buf[largeBuf->tail];
 
-    memcpy(buf, &largeBuf->buf[largeBuf->tail + 2], pop_len);
-    buf[pop_len] = 0x00;
+    memcpy(buf, &largeBuf->buf[largeBuf->tail + 1], pop_len);
 
-    largeBuf->tail += (pop_len + 2);
+    largeBuf->tail += (pop_len + 1);
 
     if (largeBuf->head == largeBuf->tail)
     {
