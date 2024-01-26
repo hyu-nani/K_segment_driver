@@ -62,7 +62,11 @@ CBOOL SPI_PROC(void)
     if (sHandSPI.pop_rx.len != 0)
     {
         sHandSPI.mode = sHandSPI.pop_rx.buf[0];
-        memcpy(sHandSPI.data, sHandSPI.pop_rx.buf[1], 5);
+        sHandSPI.data[0] = sHandSPI.pop_rx.buf[1];
+        sHandSPI.data[1] = sHandSPI.pop_rx.buf[2];
+        sHandSPI.data[2] = sHandSPI.pop_rx.buf[3];
+        sHandSPI.data[3] = sHandSPI.pop_rx.buf[4];
+        sHandSPI.data[4] = sHandSPI.pop_rx.buf[5];
         return CTRUE;
     }
     return CFALSE;
@@ -72,9 +76,9 @@ uint8_t SPI_getMode(void)
     return sHandSPI.mode;
 }
 
-uint8_t SPI_getData(void)
+uint8_t* SPI_getData(void)
 {
-    return sHandSPI.data;
+    return &sHandSPI.data[0];
 }
 
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
