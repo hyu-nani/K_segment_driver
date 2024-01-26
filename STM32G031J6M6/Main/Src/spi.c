@@ -105,14 +105,10 @@ uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *buf)
 void SPI_Callback_spiRxComplete(void)
 {
     sHandSPI.buffSmall_rx.len = SPI_RX_LEN - SPI_RX_CNT;
-	if (sHandSPI.buffSmall_rx.len != 0)
+	if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_RXNE) != RESET)
     {
         Buff_appendLarge(&sHandSPI.buffLarge_rx, sHandSPI.buffSmall_rx.buf, sHandSPI.buffSmall_rx.len);
-	}
-	
-    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_RXNE) != RESET)
-	{
-		HAL_SPI_Abort_IT(SPI_HANDLE);
+        HAL_SPI_Abort_IT(SPI_HANDLE);
 	}
 	
     HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
