@@ -38,6 +38,8 @@ typedef struct {
     uint8_t second;
     uint32_t indicate_tick;
     uint32_t indicate_interval;
+    uint32_t nowTick;
+    uint32_t preTick;
     uint8_t arr[5];
 } TIME_HANDLE_TYPEDEF_STRUCT;
 
