@@ -49,7 +49,7 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 #define SPI_HANDLE          &hspi1 
 #define SPI_IRQn            SPI1_IRQn
 #define SPI_RX_CNT          (SPI_HANDLE)->RxXferCount
-#define SPI_RX_LEN          10
+#define SPI_RX_LEN          6
 
 SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
 extern SPI_HandleTypeDef hspi1;
