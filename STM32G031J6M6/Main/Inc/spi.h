@@ -7,7 +7,7 @@ extern "C" {
 
 #include "main.h"
 #include "../Inc/support.h"
-#define BUFF_MAX_SMALL                      32
+#define BUFF_MAX_SMALL                      8
 #define BUFF_MAX_LARGE                      1024
 
 
@@ -30,9 +30,13 @@ typedef struct
 {
     Buff_Large_TypeDef buffLarge_rx;
     Buff_Small_TypeDef buffSmall_rx;
+    Buff_Small_TypeDef pop_rx;
+    uint8_t address;
+    uint8_t mode;
+    uint8_t data[5];
 } SPI_HANDLE_TYPEDEF_STRUCT;
 
-
+void SPI_PROC(uint32_t delay);
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *smallBuf, uint16_t len);
 uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *smallBuf);
 void SPI_init(void);
