@@ -40,10 +40,6 @@ void mainTask()
         }
     }
 
-    
-    
-    
-
     uHandle.taskTick = HAL_GetTick() - uHandle.taskTick_p;
     uHandle.taskTick_p = HAL_GetTick();
     uHandle.runTime = uHandle.taskTick_p;
@@ -71,15 +67,15 @@ void initTask(void)
     //srand((unsigned) time(&t)); //이거 있으면 디버거 없이 부팅안됨.
 
     LED_allOff();
-    hledUSRM.color_r = 200;
-    hledUSRM.color_g = 120;
-    hledUSRM.color_b = 30;
-    hledUSRM.bright = 100;
+    hledUSRM.color_r = 254;
+    hledUSRM.color_g = 192;
+    hledUSRM.color_b = 130;
+    hledUSRM.bright = 80;
     htime.hour = 12;
     htime.minute = 20;
     htime.indicate_interval = 1000;
     SPI_init();
-    LED_setDX(30);
+    LED_setDX(20);
 }
 
 void set_module(void)
