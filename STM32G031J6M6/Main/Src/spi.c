@@ -152,7 +152,7 @@ void SPI_Callback_spiError(void)
     {
     }
 
-    HAL_SPI_Abort(SPI_HANDLE);
+    HAL_SPI_Abort_IT(SPI_HANDLE);
     HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
 }
 
@@ -165,7 +165,7 @@ void SPI_init(void)
 
 void SPI_deinit(void)
 {
-    HAL_SPI_Abort_IT(SPI_HANDLE);
+    HAL_SPI_Abort(SPI_HANDLE);
 	//HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
 	__HAL_SPI_DISABLE_IT(SPI_HANDLE, SPI_IT_RXNE);
 }
