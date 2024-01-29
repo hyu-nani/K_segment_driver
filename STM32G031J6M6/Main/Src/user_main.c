@@ -10,7 +10,7 @@ LED_HANDLE_TYPEDEF_STRUCT hledUSRM;
 TIME_HANDLE_TYPEDEF_STRUCT htime;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim17;
-
+EXTI_HandleTypeDef hexti0;
 uint8_t inv = 0;
 float delay = 50;
 #define num_protocol 1
@@ -47,7 +47,6 @@ void mainTask()
 
 void initTask(void)
 {
-    
     set_module();
     switch (uHandle.nowModule)
     {
@@ -113,4 +112,14 @@ void dataSendFlag(uint8_t flag)
 uint8_t getDataSendFlag(void)
 {
     return hledUSRM.dataSendFlag;
+}
+
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+{
+    SPI_init();
+}
+
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+{
+    SPI_deinit();
 }

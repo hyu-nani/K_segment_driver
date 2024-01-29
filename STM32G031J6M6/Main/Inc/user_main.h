@@ -61,6 +61,9 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim);
 void dataSendFlag(uint8_t flag);
 uint8_t getDataSendFlag(void);
 
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin);
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin);
+
 #ifdef __cplusplus
 }
 #endif

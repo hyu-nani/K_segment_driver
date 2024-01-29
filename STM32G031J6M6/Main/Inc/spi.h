@@ -42,7 +42,7 @@ uint8_t* SPI_getData(void);
 CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *smallBuf, uint16_t len);
 uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *smallBuf);
 void SPI_init(void);
-
+void SPI_deinit(void);
 #ifdef __cplusplus
 }
 #endif
