@@ -35,6 +35,10 @@ void mainTask()
                 break;
             case MODE_EFFECT:
                 break;
+
+            case SET_COLOR:
+
+                break;
             default:
                 break;
         }
@@ -84,6 +88,14 @@ void set_module(void)
 #elif SK6812
     uHandle.nowModule = LED_SK6812;
 #endif
+}
+
+void set_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
+{
+    hledUSRM.color_r = red;
+    hledUSRM.color_g = green;
+    hledUSRM.color_b = blue;
+    hledUSRM.bright = bright;
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)

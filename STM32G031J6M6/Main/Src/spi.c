@@ -1,5 +1,6 @@
 #include "../Inc/spi.h"
 #include <main.h>
+#include "../Inc/user_main.h"
 #include <string.h>
 //static SPI_HANDLE_TYPEDEF_STRUCT sHandleSPI;
 /*
@@ -62,11 +63,21 @@ CBOOL SPI_PROC(void)
     if (sHandSPI.pop_rx.len != 0)
     {
         sHandSPI.mode = sHandSPI.pop_rx.buf[0];
-        sHandSPI.data[0] = sHandSPI.pop_rx.buf[1];
-        sHandSPI.data[1] = sHandSPI.pop_rx.buf[2];
-        sHandSPI.data[2] = sHandSPI.pop_rx.buf[3];
-        sHandSPI.data[3] = sHandSPI.pop_rx.buf[4];
-        sHandSPI.data[4] = sHandSPI.pop_rx.buf[5];
+        switch (sHandSPI.mode)
+        {
+            case MODE_PRINT:
+            case MODE_PRINT_INV:
+                sHandSPI.data[0] = sHandSPI.pop_rx.buf[1];
+                sHandSPI.data[1] = sHandSPI.pop_rx.buf[2];
+                sHandSPI.data[2] = sHandSPI.pop_rx.buf[3];
+                sHandSPI.data[3] = sHandSPI.pop_rx.buf[4];
+                sHandSPI.data[4] = sHandSPI.pop_rx.buf[5];
+                break;
+            case SET_COLOR:
+                set_color(sHandSPI.pop_rx.buf[1], sHandSPI.pop_rx.buf[2], sHandSPI.pop_rx.buf[3], sHandSPI.pop_rx.buf[4]);
+            default:
+                break;
+        }
         return CTRUE;
     }
     return CFALSE;

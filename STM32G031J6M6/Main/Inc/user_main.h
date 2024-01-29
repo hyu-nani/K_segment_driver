@@ -56,6 +56,7 @@ typedef struct {
 void mainTask(void);
 void initTask(void);
 void set_module(void);
+void set_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright);
 void LED_sendEnd(void);
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim);
 void dataSendFlag(uint8_t flag);
