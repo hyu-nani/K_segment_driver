@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#include "main.h"
 #include "../Inc/support.h"
+
 #define BUFF_MAX_SMALL                      8
 #define BUFF_MAX_LARGE                      1024
 
@@ -43,6 +43,11 @@ CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *smallBuf, ui
 uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *smallBuf);
 void SPI_init(void);
 void SPI_deinit(void);
+void SPI_Callback_spiRxComplete(void);
+void SPI_Callback_spiError(void);
+void HAL_SPI_ErrorCallback(SPI_HandleTypeDef *hspi);
+
+
 #ifdef __cplusplus
 }
 #endif

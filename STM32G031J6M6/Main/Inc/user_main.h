@@ -5,8 +5,13 @@
 extern "C" {
 #endif
 
-#include "../Inc/support.h"
 #include "main.h"
+#include "../Inc/support.h"
+
+#include "../Inc/flash.h"
+#include "../Inc/SPI.h"
+#include "../Inc/led.h"
+#include "../Inc/tim.h"
 
 typedef enum
 {

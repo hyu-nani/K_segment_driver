@@ -1,9 +1,5 @@
 #include "../Inc/user_main.h"
 
-#include "../Inc/flash.h"
-#include "../Inc/SPI.h"
-#include "../Inc/led.h"
-#include "../Inc/tim.h"
 
 USER_HANDLE_TYPEDEF_STRUCT uHandle;
 LED_HANDLE_TYPEDEF_STRUCT hledUSRM;
@@ -23,7 +19,7 @@ void mainTask()
     htime.nowTick = HAL_GetTick();
     if (SPI_PROC() == CTRUE)
     {
-        uHandle.mode = SPI_getMode();
+        uHandle.mode = (USRM_Mode_TypeDef)SPI_getMode();
         uHandle.arr = SPI_getData();
         switch(uHandle.mode)
         {

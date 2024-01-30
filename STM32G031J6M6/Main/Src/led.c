@@ -1,4 +1,5 @@
-#include "../Inc/led.h"
+#include <main.h>
+#include "../Inc/user_main.h"
 #include "../Inc/support.h"
 
 extern TIM_HandleTypeDef htim17;
@@ -264,7 +265,6 @@ void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B
 	hled.r = led_R;
 	hled.g = led_G;
 	hled.b = led_B;
-	int textIdx;
 	uint16_t side;
 	uint32_t cent;
 	int i, j;
@@ -368,7 +368,6 @@ void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_
 	hled.g = led_G;
 	hled.b = led_B;
 
-	int textIdx;
 	uint16_t side;
 	uint32_t cent;
 	int i, j;
@@ -472,15 +471,16 @@ void LED_allOff(void)
  * 
  * @param val 변화단계수
  */
-void LED_setDX(float val)
+void LED_setDX(uint8_t val)
 {
 	hled.dx = val;
 }
 
 void LED_rainbow(void)
 {
+  /*
 	int fadeVal=0, fadeMax=100;
-	int wait = 3, rainbowLoops = 10;
+	//int wait = 3, rainbowLoops = 10;
 	// Hue of first pixel runs 'rainbowLoops' complete loops through the color
 	// wheel. Color wheel has a range of 65536 but it's OK if we roll over, so
 	// just count from 0 to rainbowLoops*65536, using steps of 256 so we
@@ -493,7 +493,7 @@ void LED_rainbow(void)
 			// Offset pixel hue by an amount to make one full revolution of the
 			// color wheel (range of 65536) along the length of the strip
 			// (strip.numPixels() steps):
-			uint32_t pixelHue = firstPixelHue + (i * 65536L / NUM_PIXELS_PER_UNIT * NUM_UNIT);
+			//uint32_t pixelHue = firstPixelHue + (i * 65536L / NUM_PIXELS_PER_UNIT * NUM_UNIT);
 
 			// strip.ColorHSV() can take 1 or 3 arguments: a hue (0 to 65535) or
 			// optionally add saturation and value (brightness) (each 0 to 255).
@@ -517,4 +517,5 @@ void LED_rainbow(void)
 		}
 	}
 	HAL_Delay(500); // Pause 1/2 second
+*/
 }

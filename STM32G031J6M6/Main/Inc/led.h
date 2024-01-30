@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include "main.h"
 #include "support.h"
 
 #define NUM_PIXELS_PER_UNIT     45
@@ -76,7 +75,7 @@ void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);
-void LED_setDX(float val);
+void LED_setDX(uint8_t val);
 void LED_rainbow(void);
 
 #ifdef __cplusplus
