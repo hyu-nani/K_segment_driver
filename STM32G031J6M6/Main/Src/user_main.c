@@ -6,14 +6,14 @@ LED_HANDLE_TYPEDEF_STRUCT hledUSRM;
 TIME_HANDLE_TYPEDEF_STRUCT htime;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim17;
-EXTI_HandleTypeDef hexti0;
-uint8_t inv = 0;
-float delay = 50;
+
 #define num_protocol 1
 #define init_red    254
 #define init_green  150
 #define init_blue   85
 #define init_bright 100
+#define init_dx     20
+
 void mainTask()
 {
     htime.nowTick = HAL_GetTick();
@@ -77,7 +77,7 @@ void initTask(void)
     htime.minute = 20;
     htime.indicate_interval = 1000;
     SPI_init();
-    LED_setDX(20);
+    LED_setDX(init_dx);
 }
 
 void set_module(void)

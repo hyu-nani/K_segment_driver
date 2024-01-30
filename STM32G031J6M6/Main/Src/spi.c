@@ -75,8 +75,9 @@ CBOOL SPI_PROC(void)
                 break;
             case SET_COLOR:
                 set_color(sHandSPI.pop_rx.buf[1], sHandSPI.pop_rx.buf[2], sHandSPI.pop_rx.buf[3], sHandSPI.pop_rx.buf[4]);
+                break;
+                
             default:
-                HAL_SPI_Abort(SPI_HANDLE);
                 break;
         }
         return CTRUE;
