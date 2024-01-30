@@ -128,13 +128,3 @@ uint8_t getDataSendFlag(void)
 {
     return hledUSRM.dataSendFlag;
 }
-
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
-{
-    SPI_init();
-}
-
-void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
-{
-    SPI_deinit();
-}

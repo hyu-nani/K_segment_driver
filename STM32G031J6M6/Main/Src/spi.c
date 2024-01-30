@@ -149,9 +149,6 @@ void SPI_Callback_spiRxComplete(void)
 
 void SPI_Callback_spiError(void)
 {
-    if (__HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_TXE) == RESET && __HAL_SPI_GET_FLAG(SPI_HANDLE, SPI_FLAG_BSY) == RESET)
-    {
-    }
 
     HAL_SPI_Abort_IT(SPI_HANDLE);
     HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
