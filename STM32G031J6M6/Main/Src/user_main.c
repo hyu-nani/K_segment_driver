@@ -14,7 +14,10 @@ EXTI_HandleTypeDef hexti0;
 uint8_t inv = 0;
 float delay = 50;
 #define num_protocol 1
-
+#define init_red    254
+#define init_green  150
+#define init_blue   85
+#define init_bright 100
 void mainTask()
 {
     htime.nowTick = HAL_GetTick();
@@ -70,10 +73,10 @@ void initTask(void)
     //srand((unsigned) time(&t)); //이거 있으면 디버거 없이 부팅안됨.
 
     LED_allOff();
-    hledUSRM.color_r = 254;
-    hledUSRM.color_g = 192;
-    hledUSRM.color_b = 130;
-    hledUSRM.bright = 80;
+    hledUSRM.color_r = init_red;
+    hledUSRM.color_g = init_green;
+    hledUSRM.color_b = init_blue;
+    hledUSRM.bright = init_bright;
     htime.hour = 12;
     htime.minute = 20;
     htime.indicate_interval = 1000;
