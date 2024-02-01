@@ -50,7 +50,7 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 #define SPI_HANDLE          &hspi1 
 #define SPI_IRQn            SPI1_IRQn
 #define SPI_RX_CNT          (SPI_HANDLE)->RxXferCount
-#define SPI_RX_LEN          6
+#define SPI_RX_LEN          PROTOCOL_LEN
 
 SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
 extern SPI_HandleTypeDef hspi1;
@@ -58,23 +58,23 @@ extern SPI_HandleTypeDef hspi1;
 CBOOL SPI_PROC(void)
 {
 
-    sHandSPI.pop_rx.len = Buff_subArrayLarge(&sHandSPI.buffLarge_rx, sHandSPI.pop_rx.buf);
+    sHandSPI.sub_len = Buff_subArray(&sHandSPI.buf_rx, sHandSPI.sub_rx);
 
-    if (sHandSPI.pop_rx.len != 0)
+    if (sHandSPI.sub_len != 0)
     {
-        sHandSPI.mode = sHandSPI.pop_rx.buf[0];
+        sHandSPI.mode = sHandSPI.sub_rx[0];
         switch (sHandSPI.mode)
         {
             case MODE_PRINT:
             case MODE_PRINT_INV:
-                sHandSPI.data[0] = sHandSPI.pop_rx.buf[1];
-                sHandSPI.data[1] = sHandSPI.pop_rx.buf[2];
-                sHandSPI.data[2] = sHandSPI.pop_rx.buf[3];
-                sHandSPI.data[3] = sHandSPI.pop_rx.buf[4];
-                sHandSPI.data[4] = sHandSPI.pop_rx.buf[5];
+                sHandSPI.data[0] = sHandSPI.sub_rx[1];
+                sHandSPI.data[1] = sHandSPI.sub_rx[2];
+                sHandSPI.data[2] = sHandSPI.sub_rx[3];
+                sHandSPI.data[3] = sHandSPI.sub_rx[4];
+                sHandSPI.data[4] = sHandSPI.sub_rx[5];
                 break;
             case SET_COLOR:
-                set_color(sHandSPI.pop_rx.buf[1], sHandSPI.pop_rx.buf[2], sHandSPI.pop_rx.buf[3], sHandSPI.pop_rx.buf[4]);
+                set_color(sHandSPI.sub_rx[1], sHandSPI.sub_rx[2], sHandSPI.sub_rx[3], sHandSPI.sub_rx[4]);
                 break;
                 
             default:
@@ -94,9 +94,9 @@ uint8_t* SPI_getData(void)
     return &sHandSPI.data[0];
 }
 
-CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
+CBOOL Buff_append(Buff_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
 {
-    if (largeBuf->head + len >= BUFF_MAX_LARGE)
+    if (largeBuf->head + len >= BUFF_SIZE)
     {
         return CFALSE;
     }
@@ -115,7 +115,7 @@ CBOOL Buff_appendLarge(Buff_Large_TypeDef *largeBuf, const uint8_t *buf, uint16_
     return CTRUE;
 }
 
-uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *buf)
+uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf)
 {
     uint16_t pop_len = 0;
 
@@ -137,34 +137,22 @@ uint16_t Buff_subArrayLarge(Buff_Large_TypeDef *largeBuf, uint8_t *buf)
 
 void SPI_Callback_spiRxComplete(void)
 {
-    sHandSPI.buffSmall_rx.len = SPI_RX_LEN - SPI_RX_CNT;
-
-    if (sHandSPI.buffSmall_rx.len != 0)
-    {
-        Buff_appendLarge(&sHandSPI.buffLarge_rx, sHandSPI.buffSmall_rx.buf, sHandSPI.buffSmall_rx.len);
-        HAL_SPI_Abort(SPI_HANDLE);
-    }
-
-    HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+    Buff_append(&sHandSPI.buf_rx, sHandSPI.rx_pop, SPI_RX_LEN);
 }
 
 void SPI_Callback_spiError(void)
 {
-
     HAL_SPI_Abort_IT(SPI_HANDLE);
-    HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+	HAL_SPI_Receive_DMA(SPI_HANDLE, sHandSPI.rx_pop, SPI_RX_LEN);
 }
 
 void SPI_init(void)
 {
-	//HAL_SPI_Abort_IT(SPI_HANDLE);
-	HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
-	__HAL_SPI_ENABLE_IT(SPI_HANDLE, SPI_IT_RXNE);
+	HAL_SPI_Receive_DMA(SPI_HANDLE, sHandSPI.rx_pop, SPI_RX_LEN);
 }
 
 void SPI_deinit(void)
 {
-    HAL_SPI_Abort(SPI_HANDLE);
-	//HAL_SPI_Receive_IT(SPI_HANDLE, sHandSPI.buffSmall_rx.buf, SPI_RX_LEN);
+	HAL_SPI_DMAStop(SPI_HANDLE);
 	__HAL_SPI_DISABLE_IT(SPI_HANDLE, SPI_IT_RXNE);
 }

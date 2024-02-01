@@ -51,6 +51,7 @@ void mainTask()
 void initTask(void)
 {
     set_module();
+    SPI_init();
     switch (uHandle.nowModule)
     {
         case LED_WS2812:
@@ -76,7 +77,6 @@ void initTask(void)
     htime.hour = 12;
     htime.minute = 20;
     htime.indicate_interval = 1000;
-    SPI_init();
     LED_setDX(init_dx);
 }
 
