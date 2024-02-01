@@ -51,36 +51,52 @@ Dec  Char                           Dec  Char     Dec  Char     Dec  Char
 #define SPI_IRQn            SPI1_IRQn
 #define SPI_RX_CNT          (SPI_HANDLE)->RxXferCount
 #define SPI_RX_LEN          PROTOCOL_LEN
+#define SPI_STX             0xFF
+#define CS_IDXS             1
+#define CS_IDXE             (len-1)
 
 SPI_HANDLE_TYPEDEF_STRUCT sHandSPI;
 extern SPI_HandleTypeDef hspi1;
 
 CBOOL SPI_PROC(void)
 {
-
+    uint8_t idx = 0;
     sHandSPI.sub_len = Buff_subArray(&sHandSPI.buf_rx, sHandSPI.sub_rx);
 
-    if (sHandSPI.sub_len != 0)
+    if (idx < sHandSPI.sub_len)
     {
-        sHandSPI.mode = sHandSPI.sub_rx[0];
-        switch (sHandSPI.mode)
+        isLOEQ_RET_USER(sHandSPI.sub_len, (SPI_RX_LEN-1), 0);
+        uint8_t stx = sHandSPI.sub_rx[0];
+        if (stx == SPI_STX && isCS(&sHandSPI.sub_rx[idx], SPI_RX_LEN) == CTRUE)
         {
-            case MODE_PRINT:
-            case MODE_PRINT_INV:
-                sHandSPI.data[0] = sHandSPI.sub_rx[1];
-                sHandSPI.data[1] = sHandSPI.sub_rx[2];
-                sHandSPI.data[2] = sHandSPI.sub_rx[3];
-                sHandSPI.data[3] = sHandSPI.sub_rx[4];
-                sHandSPI.data[4] = sHandSPI.sub_rx[5];
-                break;
-            case SET_COLOR:
-                set_color(sHandSPI.sub_rx[1], sHandSPI.sub_rx[2], sHandSPI.sub_rx[3], sHandSPI.sub_rx[4]);
-                break;
-                
-            default:
-                break;
+            
+            sHandSPI.mode = sHandSPI.sub_rx[idx + 1];
+
+            switch (sHandSPI.mode)
+            {
+                case MODE_PRINT:
+                case MODE_PRINT_INV:
+                    sHandSPI.data[0] = sHandSPI.sub_rx[idx + 2];
+                    sHandSPI.data[1] = sHandSPI.sub_rx[idx + 3];
+                    sHandSPI.data[2] = sHandSPI.sub_rx[idx + 4];
+                    sHandSPI.data[3] = sHandSPI.sub_rx[idx + 5];
+                    sHandSPI.data[4] = sHandSPI.sub_rx[idx + 6];
+                    idx += PROTOCOL_LEN;
+                    break;
+                case SET_COLOR:
+                    set_color(sHandSPI.sub_rx[idx + 2], sHandSPI.sub_rx[idx + 3], sHandSPI.sub_rx[idx + 4], sHandSPI.sub_rx[idx + 5]);
+                    idx += PROTOCOL_LEN;
+                    break;
+                    
+                default:
+                    break;
+            }
+            return CTRUE;
         }
-        return CTRUE;
+        else
+        {
+            idx++;
+        }
     }
     return CFALSE;
 }
@@ -135,9 +151,28 @@ uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf)
     return pop_len;
 }
 
+CBOOL isCS(const uint8_t *buf, uint16_t len)
+{
+    uint8_t u8tmp = 0;
+    uint16_t i = 0;
+
+    for (i = CS_IDXS; i < CS_IDXE; i++)
+    {
+        u8tmp += buf[i];
+    }
+
+    if (u8tmp == buf[CS_IDXE])
+    {
+        return CTRUE;
+    }
+
+    return CFALSE;
+}
+
 void SPI_Callback_spiRxComplete(void)
 {
     Buff_append(&sHandSPI.buf_rx, sHandSPI.rx_pop, SPI_RX_LEN);
+    sHandSPI.callback_count++;
 }
 
 void SPI_Callback_spiError(void)
