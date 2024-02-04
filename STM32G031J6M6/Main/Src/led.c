@@ -5,6 +5,24 @@
 extern TIM_HandleTypeDef htim17;
 DATA_HANDLE_TYPEDEF_STRUCT hled;
 
+#define SIZE_1R	0.75
+#define SIZE_2R	0.8
+#define SIZE_3R	0.9
+#define SIZE_4R	0.8
+#define SIZE_6R	1
+
+#define SIZE_1G	0.8
+#define SIZE_2G	0.85
+#define SIZE_3G	0.9
+#define SIZE_4G	0.85
+#define SIZE_6G	1
+
+#define SIZE_1B	0.78
+#define SIZE_2B	0.83
+#define SIZE_3B	0.93
+#define SIZE_4B	0.85
+#define SIZE_6B	1
+
 static uint8_t ascii_table_idx[] = {
 	' ',
 	'0',
@@ -147,33 +165,42 @@ static uint16_t led_side[] = {
 	0x0000,
 	0xFFFF,
 };
+/*
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+	SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, SIZE_, 
+*/
 
 static float led_segment_mask_r[] = {
-	0.9, 0.9, 1.0, 0.7, 0.7, 1.0, 0.9, 0.9,
-	0.7, 0.7, 0.9, 0.9, 0.9, 0.7, 0.7,
-	0.7, 0.9, 1.0, 0.9, 0.7,
-	0.7, 0.9, 0.9, 0.9, 0.7,
-	0.7, 0.9, 1.0, 0.9, 0.7,
-	0.7, 0.7, 0.9, 0.9, 0.9, 0.7, 0.7,
-	0.9, 0.9, 1.0, 0.7, 0.7, 1.0, 0.9, 0.9,
+	SIZE_2R, SIZE_3R, SIZE_4R, SIZE_1R, SIZE_1R, SIZE_4R, SIZE_2R, SIZE_3R, 
+	SIZE_1R, SIZE_1R, SIZE_3R, SIZE_3R, SIZE_3R, SIZE_1R, SIZE_1R, 
+	SIZE_1R, SIZE_2R, SIZE_6R, SIZE_2R, SIZE_1R, 
+	SIZE_1R, SIZE_2R, SIZE_3R, SIZE_2R, SIZE_1R, 
+	SIZE_1R, SIZE_2R, SIZE_6R, SIZE_2R, SIZE_1R, 
+	SIZE_1R, SIZE_1R, SIZE_3R, SIZE_3R, SIZE_3R, SIZE_1R, SIZE_1R, 
+	SIZE_3R, SIZE_2R, SIZE_4R, SIZE_1R, SIZE_1R, SIZE_4R, SIZE_3R, SIZE_2R, 
 };
 static float led_segment_mask_g[] = {
-	0.9, 0.9, 1.0, 0.75, 0.75, 1.0, 0.9, 0.9,
-	0.75, 0.75, 0.9, 0.9, 0.9, 0.75, 0.75,
-	0.75, 0.9, 1.0, 0.9, 0.75,
-	0.75, 0.9, 0.9, 0.9, 0.75,
-	0.75, 0.9, 1.0, 0.9, 0.75,
-	0.75, 0.75, 0.9, 0.9, 0.9, 0.75, 0.75,
-	0.9, 0.9, 1.0, 0.75, 0.75, 1.0, 0.9, 0.9,
+	SIZE_2G, SIZE_3G, SIZE_4G, SIZE_1G, SIZE_1G, SIZE_4G, SIZE_2G, SIZE_3G, 
+	SIZE_1G, SIZE_1G, SIZE_3G, SIZE_3G, SIZE_3G, SIZE_1G, SIZE_1G, 
+	SIZE_1G, SIZE_2G, SIZE_6G, SIZE_2G, SIZE_1G, 
+	SIZE_1G, SIZE_2G, SIZE_3G, SIZE_2G, SIZE_1G, 
+	SIZE_1G, SIZE_2G, SIZE_6G, SIZE_2G, SIZE_1G, 
+	SIZE_1G, SIZE_1G, SIZE_3G, SIZE_3G, SIZE_3G, SIZE_1G, SIZE_1G, 
+	SIZE_3G, SIZE_2G, SIZE_4G, SIZE_1G, SIZE_1G, SIZE_4G, SIZE_3G, SIZE_2G, 
 };
 static float led_segment_mask_b[] = {
-	0.9, 0.9, 1.0, 0.75, 0.75, 1.0, 0.9, 0.9,
-	0.75, 0.75, 0.9, 0.9, 0.9, 0.75, 0.75,
-	0.75, 0.9, 1.0, 0.9, 0.75,
-	0.75, 0.9, 0.9, 0.9, 0.75,
-	0.75, 0.9, 1.0, 0.9, 0.75,
-	0.75, 0.75, 0.9, 0.9, 0.9, 0.75, 0.75,
-	0.9, 0.9, 1.0, 0.75, 0.75, 1.0, 0.9, 0.9,
+	SIZE_2B, SIZE_3B, SIZE_4B, SIZE_1B, SIZE_1B, SIZE_4B, SIZE_2B, SIZE_3B, 
+	SIZE_1B, SIZE_1B, SIZE_3B, SIZE_3B, SIZE_3B, SIZE_1B, SIZE_1B, 
+	SIZE_1B, SIZE_2B, SIZE_6B, SIZE_2B, SIZE_1B, 
+	SIZE_1B, SIZE_2B, SIZE_3B, SIZE_2B, SIZE_1B, 
+	SIZE_1B, SIZE_2B, SIZE_6B, SIZE_2B, SIZE_1B, 
+	SIZE_1B, SIZE_1B, SIZE_3B, SIZE_3B, SIZE_3B, SIZE_1B, SIZE_1B, 
+	SIZE_3B, SIZE_2B, SIZE_4B, SIZE_1B, SIZE_1B, SIZE_4B, SIZE_3B, SIZE_2B, 
 };
 
 /** @brief led data send to DMA
@@ -332,18 +359,9 @@ void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B
 			hled.red_now[i] += (int16_t)((float)(hled.red_dest[i] - hled.red_orig[i]) / (float)hled.dx);
 			hled.green_now[i] += (int16_t)((float)(hled.green_dest[i] - hled.green_orig[i]) / (float)hled.dx);
 			hled.blue_now[i] += (int16_t)((float)(hled.blue_dest[i] - hled.blue_orig[i]) / (float)hled.dx);
-		}
-		for (int num = 0 ; num < NUM_UNIT; num++)
-		{
-			i = 0;
-			
-			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
-			{
-				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
-				LED_setColor(j, (int16_t)((float)hled.red_now[j] * led_segment_mask_r[i]) / MUL_VAL, 
-								(int16_t)((float)hled.green_now[j] * led_segment_mask_g[i]) / MUL_VAL, 
-								(int16_t)((float)hled.blue_now[j] * led_segment_mask_b[i]) / MUL_VAL);
-			}
+			LED_setColor(i, (int16_t)((float)hled.red_now[i] * led_segment_mask_r[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL, 
+							(int16_t)((float)hled.green_now[i] * led_segment_mask_g[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL, 
+							(int16_t)((float)hled.blue_now[i] * led_segment_mask_b[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL);
 		}
 		LED_show();
 	}
@@ -435,18 +453,9 @@ void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_
 			hled.red_now[i] += (int16_t)((float)(hled.red_dest[i] - hled.red_orig[i]) / (float)hled.dx);
 			hled.green_now[i] += (int16_t)((float)(hled.green_dest[i] - hled.green_orig[i]) / (float)hled.dx);
 			hled.blue_now[i] += (int16_t)((float)(hled.blue_dest[i] - hled.blue_orig[i]) / (float)hled.dx);
-		}
-		for (int num = 0 ; num < NUM_UNIT; num++)
-		{
-			i = 0;
-			
-			for (int pixelNum = 0; pixelNum < NUM_PIXELS_PER_UNIT; pixelNum++)
-			{
-				j = pixelNum + num * NUM_PIXELS_PER_UNIT;
-				LED_setColor(j, (int16_t)((float)hled.red_now[j] * led_segment_mask_r[i]) / MUL_VAL, 
-								(int16_t)((float)hled.green_now[j] * led_segment_mask_g[i]) / MUL_VAL, 
-								(int16_t)((float)hled.blue_now[j] * led_segment_mask_b[i]) / MUL_VAL);
-			}
+			LED_setColor(i, (int16_t)((float)hled.red_now[i] * led_segment_mask_r[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL, 
+							(int16_t)((float)hled.green_now[i] * led_segment_mask_g[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL, 
+							(int16_t)((float)hled.blue_now[i] * led_segment_mask_b[i % NUM_PIXELS_PER_UNIT]) / MUL_VAL);
 		}
 		LED_show();
 	}
