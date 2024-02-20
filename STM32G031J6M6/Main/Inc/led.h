@@ -36,9 +36,6 @@ extern "C" {
 typedef struct 
 {
     uint16_t    idx;/* data */
-    int16_t     r;
-    int16_t     g;
-    int16_t     b;
     uint8_t     idx_list[NUM_UNIT];     
     uint32_t    dma_buf[DMA_BUFF_SIZE]; //chort buf 
 
@@ -58,6 +55,20 @@ typedef struct
     int8_t      dx;
 } DATA_HANDLE_TYPEDEF_STRUCT;
 
+typedef struct 
+{
+    uint16_t    ch_red;
+    uint16_t    ch_green;
+    uint16_t    ch_blue;
+    uint16_t    ch_bright;
+
+    uint16_t    bg_red;
+    uint16_t    bg_green;
+    uint16_t    bg_blue;
+    uint16_t    bg_bright;
+
+} COLOR_TYPEDEF_STRUCT;
+
 
 
 /* data */
@@ -70,8 +81,8 @@ static float    led_segment_mask_b[NUM_PIXELS_PER_UNIT];
 
 void append_buf(void);
 void LED_show(void);
-void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright);
-void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright);
+void LED_showSegment(uint8_t* str, COLOR_TYPEDEF_STRUCT* color);
+void LED_showSegment_invert(uint8_t* str, COLOR_TYPEDEF_STRUCT* color);
 void LED_allOff(void);
 void set_idx(void);
 void send_DMA(void);

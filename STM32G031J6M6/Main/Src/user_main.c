@@ -6,12 +6,17 @@ LED_HANDLE_TYPEDEF_STRUCT hledUSRM;
 TIME_HANDLE_TYPEDEF_STRUCT htime;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim17;
+COLOR_TYPEDEF_STRUCT color;
 
 #define num_protocol 1
 #define init_red    254
 #define init_green  150
 #define init_blue   85
 #define init_bright 100
+#define init_bg_red    254
+#define init_bg_green  150
+#define init_bg_blue   85
+#define init_bg_bright 100
 #define init_dx     20
 
 void mainTask()
@@ -27,10 +32,26 @@ void mainTask()
                 LED_allOff();
                 break;
             case MODE_PRINT:
-                LED_showSegment(uHandle.arr, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                color.ch_red = hledUSRM.color_r;
+                color.ch_green = hledUSRM.color_g;
+                color.ch_blue = hledUSRM.color_b;
+                color.ch_bright = hledUSRM.bright;
+                color.bg_red = 40;
+                color.bg_green = 50;
+                color.bg_blue = 50;
+                color.bg_bright = 100;
+                LED_showSegment(uHandle.arr, &color);
                 break;
             case MODE_PRINT_INV:
-                LED_showSegment_invert(uHandle.arr, hledUSRM.color_r, hledUSRM.color_g, hledUSRM.color_b, hledUSRM.bright);
+                color.ch_red = hledUSRM.color_r;
+                color.ch_green = hledUSRM.color_g;
+                color.ch_blue = hledUSRM.color_b;
+                color.ch_bright = hledUSRM.bright;
+                color.bg_red = 40;
+                color.bg_green = 50;
+                color.bg_blue = 50;
+                color.bg_bright = 100;
+                LED_showSegment_invert(uHandle.arr, &color);
                 break;
             case MODE_EFFECT:
                 break;
@@ -89,12 +110,20 @@ void set_module(void)
 #endif
 }
 
-void set_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
+void set_ch_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
 {
     hledUSRM.color_r = red;
     hledUSRM.color_g = green;
     hledUSRM.color_b = blue;
     hledUSRM.bright = bright;
+}
+
+void set_bg_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
+{
+    color.bg_red = 40;
+    color.bg_green = 50;
+    color.bg_blue = 50;
+    color.bg_bright = 100;
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)

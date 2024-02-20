@@ -283,23 +283,25 @@ void LED_setColor(uint8_t pixelNum, uint16_t led_R, uint16_t led_G, uint16_t led
  *  @param led_B 0 - 255
  *  @param led_bright 0 - 100 [%]
  */
-void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright)
+void LED_showSegment(uint8_t* str, COLOR_TYPEDEF_STRUCT* color)
 {
-	led_bright = (led_bright > 100) ? 100 : led_bright;
-	led_R = (uint16_t)((float)led_R * (float)led_bright / 100.0f) * MUL_VAL;
-	led_G = (uint16_t)((float)led_G * (float)led_bright / 100.0f) * MUL_VAL;
-	led_B = (uint16_t)((float)led_B * (float)led_bright / 100.0f) * MUL_VAL;
-	hled.r = led_R;
-	hled.g = led_G;
-	hled.b = led_B;
+	color->ch_bright = (color->ch_bright > 100) ? 100 : color->ch_bright;
+	color->ch_red = (uint16_t)((float)color->ch_red * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->ch_green = (uint16_t)((float)color->ch_green * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->ch_blue = (uint16_t)((float)color->ch_blue * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->bg_bright = (color->bg_bright > 100) ? 100 : color->bg_bright;
+	color->bg_red = (uint16_t)((float)color->bg_red * (float)color->bg_bright / 100.0f) * MUL_VAL;
+	color->bg_green = (uint16_t)((float)color->bg_green * (float)color->bg_bright / 100.0f) * MUL_VAL;
+	color->bg_blue = (uint16_t)((float)color->bg_blue * (float)color->bg_bright / 100.0f) * MUL_VAL;
+	
 	uint16_t side;
 	uint32_t cent;
-	int i, j;
+	int i;
 	for (int num = 0; num < NUM_UNIT; num++)
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
 		{
-			if (ascii_table_idx[idx] == *(ch + num))
+			if (ascii_table_idx[idx] == *(str + num))
 			{
 				hled.idx_list[num] = idx;
 				break;
@@ -316,15 +318,15 @@ void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B
 			{
 				if (cent & 0x80000000)
 				{	
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_blue;
 				}
 				else
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_blue;
 				}
 				cent = (cent << 1);
 			}
@@ -332,15 +334,15 @@ void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B
 			{
 				if (side & 0x8000)
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_blue;
 				}
 				else
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_blue;
 				}
 				side = (side << 1);
 			}
@@ -376,24 +378,25 @@ void LED_showSegment(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B
  * @param led_B 0 - 255
  * @param led_bright 0 - 100 [%]
  */
-void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_t led_B, uint8_t led_bright)
+void LED_showSegment_invert(uint8_t* str, COLOR_TYPEDEF_STRUCT* color)
 {
-	led_bright = (led_bright > 100) ? 100 : led_bright;
-	led_R = (uint16_t)((float)led_R * (float)led_bright / 100.0f) * MUL_VAL;
-	led_G = (uint16_t)((float)led_G * (float)led_bright / 100.0f) * MUL_VAL;
-	led_B = (uint16_t)((float)led_B * (float)led_bright / 100.0f) * MUL_VAL;
-	hled.r = led_R;
-	hled.g = led_G;
-	hled.b = led_B;
+	color->ch_bright = (color->ch_bright > 100) ? 100 : color->ch_bright;
+	color->ch_red = (uint16_t)((float)color->ch_red * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->ch_green = (uint16_t)((float)color->ch_green * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->ch_blue = (uint16_t)((float)color->ch_blue * (float)color->ch_bright / 100.0f) * MUL_VAL;
+	color->bg_bright = (color->bg_bright > 100) ? 100 : color->bg_bright;
+	color->bg_red = (uint16_t)((float)color->bg_red * (float)color->bg_bright / 100.0f) * MUL_VAL;
+	color->bg_green = (uint16_t)((float)color->bg_green * (float)color->bg_bright / 100.0f) * MUL_VAL;
+	color->bg_blue = (uint16_t)((float)color->bg_blue * (float)color->bg_bright / 100.0f) * MUL_VAL;
 
 	uint16_t side;
 	uint32_t cent;
-	int i, j;
+	int i;
 	for (int num = 0; num < NUM_UNIT; num++)
 	{
 		for (int idx = 0; idx < MAX_IDX; idx++)
 		{
-			if (ascii_table_idx[idx] == *(ch + num))
+			if (ascii_table_idx[idx] == *(str + num))
 			{
 				hled.idx_list[num] = idx;
 				break;
@@ -410,15 +413,15 @@ void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_
 			{
 				if (cent & 0x80000000)
 				{	
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_blue;
 				}
 				else
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_blue;
 				}
 				cent = (cent << 1);
 			}
@@ -426,15 +429,15 @@ void LED_showSegment_invert(uint8_t* ch, uint16_t led_R, uint16_t led_G, uint16_
 			{
 				if (side & 0x8000)
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = 0;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->bg_blue;
 				}
 				else
 				{
-					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_R;
-					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_G;
-					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = led_B;
+					hled.red_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_red;
+					hled.green_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_green;
+					hled.blue_dest[(pixelNum + num * NUM_PIXELS_PER_UNIT)] = color->ch_blue;
 				}
 				side = (side << 1);
 			}

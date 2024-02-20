@@ -84,7 +84,7 @@ CBOOL SPI_PROC(void)
                     idx += PROTOCOL_LEN;
                     break;
                 case SET_COLOR:
-                    set_color(sHandSPI.sub_rx[idx + 2], sHandSPI.sub_rx[idx + 3], sHandSPI.sub_rx[idx + 4], sHandSPI.sub_rx[idx + 5]);
+                    //set_ch_color(sHandSPI.sub_rx[idx + 2], sHandSPI.sub_rx[idx + 3], sHandSPI.sub_rx[idx + 4], sHandSPI.sub_rx[idx + 5]);
                     idx += PROTOCOL_LEN;
                     break;
                     
