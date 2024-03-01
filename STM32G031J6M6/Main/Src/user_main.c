@@ -13,6 +13,7 @@ COLOR_TYPEDEF_STRUCT color;
 #define init_green  150
 #define init_blue   85
 #define init_bright 100
+
 #define init_bg_red    254
 #define init_bg_green  150
 #define init_bg_blue   85
@@ -120,10 +121,10 @@ void set_ch_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
 
 void set_bg_color(uint8_t red, uint8_t green, uint8_t blue, uint8_t bright)
 {
-    color.bg_red = 40;
-    color.bg_green = 50;
-    color.bg_blue = 50;
-    color.bg_bright = 100;
+    color.bg_red = red;
+    color.bg_green = green;
+    color.bg_blue = blue;
+    color.bg_bright = bright;
 }
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)

@@ -9,6 +9,7 @@ extern "C" {
 
 #define BUFF_SIZE               512
 #define PROTOCOL_LEN            8
+
 typedef struct
 {
     uint8_t buf[BUFF_SIZE];

@@ -21,6 +21,9 @@ typedef enum
     MODE_EFFECT,
     SET_DX,
     SET_COLOR,
+    SET_BG_COLOR,
+    SET_DX,
+    COMMAND_MAX,
 } USRM_Mode_TypeDef;
 
 typedef struct 
