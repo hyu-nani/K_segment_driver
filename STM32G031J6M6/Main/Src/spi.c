@@ -63,7 +63,7 @@ CBOOL SPI_PROC(void)
     uint8_t idx = 0;
     sHandSPI.sub_len = Buff_subArray(&sHandSPI.buf_rx, sHandSPI.sub_rx);
 
-    if (idx < sHandSPI.sub_len)
+    if (0 < sHandSPI.sub_len)
     {
         isLOEQ_RET_USER(sHandSPI.sub_len, (SPI_RX_LEN-1), 0);
         uint8_t stx = sHandSPI.sub_rx[0];
@@ -131,7 +131,7 @@ CBOOL Buff_append(Buff_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
 
     memcpy(&largeBuf->buf[largeBuf->head], buf, len);
 
-    largeBuf->head += len;
+    largeBuf->head = (largeBuf->head + len) % BUFF_SIZE;
 
     if (largeBuf->max < len)
     {
@@ -151,7 +151,7 @@ uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf)
 
     memcpy(buf, &largeBuf->buf[largeBuf->tail + 1], pop_len);
 
-    largeBuf->tail += (pop_len + 1);
+    largeBuf->tail = (largeBuf->tail + pop_len + 1) % BUFF_SIZE;
 
     if (largeBuf->head == largeBuf->tail)
     {

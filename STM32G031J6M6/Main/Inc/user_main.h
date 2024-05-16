@@ -22,7 +22,6 @@ typedef enum
     SET_DX,
     SET_COLOR,
     SET_BG_COLOR,
-    SET_DX,
     COMMAND_MAX,
 } USRM_Mode_TypeDef;
 
@@ -47,6 +46,10 @@ typedef struct {
     uint8_t color_g;
     uint8_t color_b;
     uint8_t bright;
+    uint8_t bgColor_r;
+    uint8_t bgColor_g;
+    uint8_t bgColor_b;
+    uint8_t bgBright;
     uint16_t LEDcount;
 } LED_HANDLE_TYPEDEF_STRUCT;
 
