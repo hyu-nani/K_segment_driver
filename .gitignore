@@ -3,3 +3,4 @@ STM32G031J6M6/EWARM/STM32G031J6M6/
 STM32G031J6M6/EWARM/settings/Project.wsdt
 STM32G031J6M6/Document/
 STM32G031J6M6/Drivers/
+TEST/segment_stm32f030_test/EWARM/segment_stm32f030_test.dep

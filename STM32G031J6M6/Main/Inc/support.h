@@ -9,17 +9,19 @@ extern "C" {
 #include <stdlib.h>
 #include <time.h>
 
+#define WS2812
+//#define SK6812
+
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef int s32;
+typedef short s16;
+
 typedef enum {
     CFALSE = 0,
     CTRUE,
 } CBOOL;
-
-typedef enum {
-    NONE = 0,
-    LED_WS2812,
-    LED_SK6812,
-    MODULE_MAX,
-} LED_moduleList;
 
 /*
  * support

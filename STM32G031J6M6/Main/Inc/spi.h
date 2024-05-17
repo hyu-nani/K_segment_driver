@@ -12,31 +12,31 @@ extern "C" {
 
 typedef struct
 {
-    uint8_t buf[BUFF_SIZE];
-    uint16_t head;
-    uint16_t tail;
-    uint16_t max;
-    uint16_t len;
+    u8 buf[BUFF_SIZE];
+    u16 head;
+    u16 tail;
+    u16 max;
+    u16 len;
 } Buff_TypeDef;
 
 typedef struct
 {
     Buff_TypeDef buf_rx;
-    uint8_t rx_pop[PROTOCOL_LEN];
-    uint8_t sub_rx[PROTOCOL_LEN];
-    uint8_t sub_len;
-    uint8_t address;
-    uint8_t mode;
-    uint8_t data[5];
-    uint16_t callback_count;
+    u8 rx_pop[PROTOCOL_LEN];
+    u8 sub_rx[PROTOCOL_LEN];
+    u8 sub_len;
+    u8 address;
+    u8 mode;
+    u8 data[5];
+    u16 callback_count;
 } SPI_HANDLE_TYPEDEF_STRUCT;
 
 CBOOL SPI_PROC(void);
-uint8_t SPI_getMode(void);
-uint8_t* SPI_getData(void);
-CBOOL Buff_append(Buff_TypeDef *largeBuf, const uint8_t *buf, uint16_t len);
-uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf);
-CBOOL isCS(const uint8_t *buf, uint16_t len);
+u8 SPI_getMode(void);
+u8* SPI_getData(void);
+CBOOL Buff_append(Buff_TypeDef *largeBuf, const u8 *buf, u16 len);
+u16 Buff_subArray(Buff_TypeDef *largeBuf, u8 *buf);
+CBOOL isCS(const u8 *buf, u16 len);
 
 void SPI_init(void);
 void SPI_deinit(void);

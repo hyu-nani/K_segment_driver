@@ -60,13 +60,13 @@ extern SPI_HandleTypeDef hspi1;
 
 CBOOL SPI_PROC(void)
 {
-    uint8_t idx = 0;
+    u8 idx = 0;
     sHandSPI.sub_len = Buff_subArray(&sHandSPI.buf_rx, sHandSPI.sub_rx);
 
     if (0 < sHandSPI.sub_len)
     {
         isLOEQ_RET_USER(sHandSPI.sub_len, (SPI_RX_LEN-1), 0);
-        uint8_t stx = sHandSPI.sub_rx[0];
+        u8 stx = sHandSPI.sub_rx[0];
         if (stx == SPI_STX && isCS(&sHandSPI.sub_rx[idx], SPI_RX_LEN) == CTRUE)
         {
             
@@ -110,17 +110,17 @@ CBOOL SPI_PROC(void)
     }
     return CFALSE;
 }
-uint8_t SPI_getMode(void)
+u8 SPI_getMode(void)
 {
     return sHandSPI.mode;
 }
 
-uint8_t* SPI_getData(void)
+u8* SPI_getData(void)
 {
     return &sHandSPI.data[0];
 }
 
-CBOOL Buff_append(Buff_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
+CBOOL Buff_append(Buff_TypeDef *largeBuf, const u8 *buf, u16 len)
 {
     if (largeBuf->head + len >= BUFF_SIZE)
     {
@@ -141,9 +141,9 @@ CBOOL Buff_append(Buff_TypeDef *largeBuf, const uint8_t *buf, uint16_t len)
     return CTRUE;
 }
 
-uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf)
+u16 Buff_subArray(Buff_TypeDef *largeBuf, u8 *buf)
 {
-    uint16_t pop_len = 0;
+    u16 pop_len = 0;
 
     isEQUA_RET_USER(largeBuf->head, largeBuf->tail, 0);
 
@@ -161,10 +161,10 @@ uint16_t Buff_subArray(Buff_TypeDef *largeBuf, uint8_t *buf)
     return pop_len;
 }
 
-CBOOL isCS(const uint8_t *buf, uint16_t len)
+CBOOL isCS(const u8 *buf, u16 len)
 {
-    uint8_t u8tmp = 0;
-    uint16_t i = 0;
+    u8 u8tmp = 0;
+    u16 i = 0;
 
     for (i = CS_IDXS; i < CS_IDXE; i++)
     {

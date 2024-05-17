@@ -41,7 +41,7 @@ void mainTask()
                 color.bg_green = hledUSRM.bgColor_g;
                 color.bg_blue = hledUSRM.bgColor_b;
                 color.bg_bright = hledUSRM.bgBright;
-                LED_showSegment(uHandle.arr, &color);
+                LED_showSegment(uHandle.arr, &color, CFALSE);
                 break;
 
             case MODE_PRINT_INV:
@@ -53,7 +53,7 @@ void mainTask()
                 color.bg_green = hledUSRM.bgColor_g;
                 color.bg_blue = hledUSRM.bgColor_b;
                 color.bg_bright = hledUSRM.bgBright;
-                LED_showSegment_invert(uHandle.arr, &color);
+                LED_showSegment(uHandle.arr, &color, CTRUE);
                 break;
                 
             case MODE_EFFECT:
