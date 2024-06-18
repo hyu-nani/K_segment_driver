@@ -8,7 +8,9 @@ extern "C" {
 #include "../Inc/support.h"
 
 #define BUFF_SIZE               512
+
 #define PROTOCOL_LEN            8
+/* /stx/num/cmd/data[5]/cs/ */
 
 typedef struct
 {
